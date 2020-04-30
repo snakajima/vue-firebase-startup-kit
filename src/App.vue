@@ -1,10 +1,15 @@
 <template>
   <div id="app">
+    <b-navbar style="background:yellow">
+      <b-navbar-item>
+        <router-link to="/">Home2</router-link>
+      </b-navbar-item>
+    </b-navbar>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home2</router-link>|
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
