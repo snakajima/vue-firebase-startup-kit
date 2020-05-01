@@ -22,7 +22,7 @@
       </template>
     </b-navbar>
     <div id="nav">
-      <router-link to="/">Home8</router-link>|
+      <router-link to="/">Home9</router-link>|
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
@@ -36,6 +36,45 @@
 $primary: #8c67ef;
 $primary-invert: findColorInvert($primary);
 
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+  "white": (
+    $white,
+    $black
+  ),
+  "black": (
+    $black,
+    $white
+  ),
+  "light": (
+    $light,
+    $light-invert
+  ),
+  "dark": (
+    $dark,
+    $dark-invert
+  ),
+  "primary": (
+    $primary,
+    $primary-invert
+  ),
+  "info": (
+    $info,
+    $info-invert
+  ),
+  "success": (
+    $success,
+    $success-invert
+  ),
+  "warning": (
+    $warning,
+    $warning-invert
+  ),
+  "danger": (
+    $danger,
+    $danger-invert
+  )
+);
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
