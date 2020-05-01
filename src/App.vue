@@ -22,7 +22,7 @@
       </template>
     </b-navbar>
     <div id="nav">
-      <router-link to="/">Home5</router-link>|
+      <router-link to="/">Home8</router-link>|
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
@@ -32,6 +32,13 @@
 <style lang="scss">
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
+// customization
+$primary: #8c67ef;
+$primary-invert: findColorInvert($primary);
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
