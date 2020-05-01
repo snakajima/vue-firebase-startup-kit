@@ -22,7 +22,7 @@
       </template>
     </b-navbar>
     <div id="nav">
-      <router-link to="/">Home2</router-link>|
+      <router-link to="/">Home5</router-link>|
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
@@ -30,6 +30,9 @@
 </template>
 
 <style lang="scss">
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
