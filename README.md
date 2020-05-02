@@ -4,7 +4,9 @@
 
 This is a template repository, which would help any level of developers to quickly start to develop a web application using Firebase as a backand and Vue as a front-end. 
 
-Here is a quick start guide:
+In addition to Firebase and Vue, we have chosen Buefy as the UI library. 
+
+# Quick Start Guide
 
 1. Install "npm"
 2. Install Firebase Tools (run "npm install -g firebase-tools") 
@@ -23,6 +25,14 @@ export const firebaseConfig = {
   messagingSenderId: "267570366791",
   appId: "1:267570366791:web:cb1a0179314fd9da3ee462"
 };
+```
+7. Create .firebaserc file based on your firebase project name, which looks like this:
+```
+{
+  "projects": {
+    "default": "your-own-firebase-project-name"
+  }
+}
 ```
 
 ## Project setup
