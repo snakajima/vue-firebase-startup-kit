@@ -2,11 +2,16 @@
 
 ## Overview
 
-This is a template repository, which would help any level of developers to quickly start to develop a web application using Firebase as a backand and Vue as a front-end. All you need to do is:
+This is a template repository, which would help any level of developers to quickly start to develop a web application using Firebase as a backand and Vue as a front-end. 
 
-1. Fork this repository
-2. Create your own project in Firebase console and create Hosting and Firestore.
-3. Create your own project.ts at src/config directory by copy & paset firbaseConfig from Firebase console, and add export it, wihch should look like this. 
+Here is a quick start guide:
+
+1. Install "npm"
+2. Install Firebase Tools (run "npm install -g firebase-tools") 
+3. Fork this repository (on github)
+4. "git clone" that repository 
+5. Create your own project in Firebase console and create Hosting and Firestore.
+6. Create your own project.ts at src/config directory by copy & paset firbaseConfig from Firebase console, and add export it, wihch should look like this. 
 
 ```
 export const firebaseConfig = {
