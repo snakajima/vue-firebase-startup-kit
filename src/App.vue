@@ -1,14 +1,19 @@
 <template>
   <div id="app">
-    <b-navbar type="is-primary">
-      <template slot="start">
-        <b-navbar-item tag="router-link" to="/">Home</b-navbar-item>
-        <b-navbar-item tag="router-link" to="/about">About</b-navbar-item>
-      </template>
-    </b-navbar>
+    <header-component />
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import HeaderComponent from "@/components/Header.vue";
+
+export default {
+  components: {
+    HeaderComponent
+  }
+};
+</script>
 
 <style lang="scss">
 @import "@/assets/buefy.scss";
