@@ -13,7 +13,7 @@ import { Unsubscribe } from "firebase";
 export default {
   data() {
     return {
-      detacher: null
+      detacher: undefined as Unsubscribe | undefined
     };
   },
   components: {
@@ -25,7 +25,7 @@ export default {
     });
   },
   destroyed() {
-    if (this.detacher !== null) {
+    if (this.detacher) {
       this.detacher();
     }
   }
