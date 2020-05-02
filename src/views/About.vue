@@ -1,5 +1,8 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">About</h1>
+      <p>Firebase rocks!</p>
+    </div>
+  </section>
 </template>
