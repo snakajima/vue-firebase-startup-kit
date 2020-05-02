@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-component />
-    <router-view />
+    <router-view v-if="authorized" />
   </div>
 </template>
 
@@ -22,7 +22,13 @@ export default {
   created() {
     this.detacher = auth.onAuthStateChanged(user => {
       console.log("auth", user);
+      this.$store.commit("setUser", user);
     });
+  },
+  computed: {
+    authorized() {
+      return this.$store.state.user !== undefined;
+    }
   },
   destroyed() {
     if (this.detacher) {
