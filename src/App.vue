@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar>
+    <b-navbar id="navbar">
       <template slot="start">
         <b-navbar-item href="#">Home</b-navbar-item>
         <b-navbar-item href="#">Documentation</b-navbar-item>
@@ -85,6 +85,10 @@ $colors: (
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#navbar {
+  background: $primary;
 }
 
 #nav {
