@@ -7,10 +7,27 @@
 
 <script lang="ts">
 import HeaderComponent from "@/components/Header.vue";
+import { auth } from "@/scripts/firebase";
+import { Unsubscribe } from "firebase";
 
 export default {
+  data() {
+    return {
+      detacher: null
+    };
+  },
   components: {
     HeaderComponent
+  },
+  created() {
+    this.detacher = auth.onAuthStateChanged(user => {
+      console.log("auth", user);
+    });
+  },
+  destroyed() {
+    if (this.detacher !== null) {
+      this.detacher();
+    }
   }
 };
 </script>
