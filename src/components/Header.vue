@@ -6,12 +6,29 @@
     <template slot="start">
       <b-navbar-item tag="router-link" to="/">Home</b-navbar-item>
       <b-navbar-item tag="router-link" to="/about">About</b-navbar-item>
-      <b-navbar-item tag="router-link" to="/auth">Auth</b-navbar-item>
+      <b-navbar-item v-if="hasUser" tag="div">
+        <a href="#" @click="handleSignOut">Sign Out</a>
+      </b-navbar-item>
+      <b-navbar-item v-else tag="router-link" to="/auth">Sign In</b-navbar-item>
     </template>
   </b-navbar>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({});
+import { auth } from "@/scripts/firebase";
+
+export default Vue.extend({
+  computed: {
+    hasUser() {
+      return !!this.$store.state.user;
+    }
+  },
+  methods: {
+    handleSignOut() {
+      console.log("sign out");
+      auth.signOut();
+    }
+  }
+});
 </script>
