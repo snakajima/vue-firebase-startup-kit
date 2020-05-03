@@ -21,12 +21,12 @@ export default {
   },
   created() {
     this.detacher = auth.onAuthStateChanged(user => {
-      console.log("auth", user);
+      console.log("auth uid=", user && user.uid);
       this.$store.commit("setUser", user);
     });
   },
   computed: {
-    authorized() {
+    authorized(): boolean {
       return this.$store.state.user !== undefined;
     }
   },
