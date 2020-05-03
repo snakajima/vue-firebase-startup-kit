@@ -19,7 +19,7 @@ Requirements:
 Steps:
 1. Fork this repository (on github)
 2. "git clone" that repository 
-3. Create your own project in Firebase console and create Hosting and Firestore.
+3. Create your own project in Firebase console, then create a Web App and Firestore and enable Email authentication.
 4. Create your own project.ts at src/config directory by copy & paset firbaseConfig from Firebase console, and add export it, wihch should look like this. 
 
 ```
