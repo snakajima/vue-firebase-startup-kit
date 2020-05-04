@@ -6,6 +6,8 @@
     <template slot="start">
       <b-navbar-item tag="router-link" to="/">Home</b-navbar-item>
       <b-navbar-item tag="router-link" to="/about">About</b-navbar-item>
+    </template>
+    <template slot="end">
       <b-navbar-item v-if="hasUser" tag="div">
         <b-button @click="handleSignOut">Sign Out</b-button>
       </b-navbar-item>
