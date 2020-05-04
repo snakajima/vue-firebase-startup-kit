@@ -5,7 +5,9 @@
       <b-button @click="handleCreate">Create a Chat Room</b-button>
     </div>
     <ul>
-      <li v-for="room in chatrooms" :key="room.id">{{room.title}}</li>
+      <li v-for="room in chatrooms" :key="room.id">
+        <router-link :to="`/chat/${room.id}`">{{room.title}}</router-link>
+      </li>
     </ul>
   </section>
 </template>
