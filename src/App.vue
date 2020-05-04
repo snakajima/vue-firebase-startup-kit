@@ -9,33 +9,31 @@
 import HeaderComponent from "@/components/Header.vue";
 import { auth } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-export default {
-  data() {
-    return {
-      detacher: undefined as Unsubscribe | undefined
-    };
-  },
+@Component({
   components: {
     HeaderComponent
-  },
+  }
+})
+export default class App extends Vue {
+  detacher: Unsubscribe | undefined;
   created() {
     this.detacher = auth.onAuthStateChanged(user => {
       console.log("auth uid=", user && user.uid);
       this.$store.commit("setUser", user);
     });
-  },
-  computed: {
-    authorized(): boolean {
-      return this.$store.state.user !== undefined;
-    }
-  },
+  }
+  get authorized(): boolean {
+    return this.$store.state.user !== undefined;
+  }
   destroyed() {
     if (this.detacher) {
       this.detacher();
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
