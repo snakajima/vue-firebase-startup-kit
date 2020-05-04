@@ -5,7 +5,12 @@
         Hello
         {{userName}}
       </h1>
-      <p>Firebase rocks!</p>
+      <div v-if="hasUser">
+        <p>Welcome to the play ground!</p>
+      </div>
+      <div v-else>
+        <p>Please Sign-in to see various features!</p>
+      </div>
     </div>
   </section>
 </template>
@@ -21,6 +26,9 @@ export default class Home extends Vue {
       return this.$store.state.user.displayName;
     }
     return "";
+  }
+  get hasUser(): boolean {
+    return !!this.$store.state.user;
   }
 }
 </script>
