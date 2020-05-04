@@ -7,6 +7,14 @@
       </h1>
       <div v-if="hasUser">
         <p>Welcome to the play ground!</p>
+        <ul>
+          <li>
+            <router-link to="/about">About</router-link>
+          </li>
+          <li>
+            <router-link to="/chat">Chat</router-link>
+          </li>
+        </ul>
       </div>
       <div v-else>
         <p>Please Sign-in to see various features!</p>
