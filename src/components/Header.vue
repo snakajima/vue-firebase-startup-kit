@@ -18,22 +18,14 @@
 import Vue from "vue";
 import { auth } from "@/scripts/firebase";
 
-export default Vue.extend({
-  data() {
-    return {
-      isActive: false
-    };
-  },
-  computed: {
-    hasUser(): boolean {
-      return !!this.$store.state.user;
-    }
-  },
-  methods: {
-    handleSignOut() {
-      auth.signOut();
-      this.isActive = false;
-    }
+export default class Header extends Vue {
+  isActive = false;
+  get hasUser(): boolean {
+    return !!this.$store.state.user;
   }
-});
+  handleSignOut() {
+    auth.signOut();
+    this.isActive = false;
+  }
+}
 </script>
