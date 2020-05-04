@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
+import { auth } from "@/scripts/firebase";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import { auth } from "@/scripts/firebase";
 
 @Component
 export default class Header extends Vue {
