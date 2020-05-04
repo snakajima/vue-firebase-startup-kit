@@ -9,7 +9,7 @@ export default new Vuex.Store({
 		user: undefined as User | null | undefined
 	},
 	mutations: {
-		setUser(state, user) {
+		setUser(state, user: User | null) {
 			state.user = user
 		}
 	},

@@ -12,14 +12,15 @@
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({
-  computed: {
-    userName() {
-      if (this.$store.state.user) {
-        return this.$store.state.user.displayName;
-      }
-      return "";
+import { Component } from "vue-property-decorator";
+
+@Component
+export default class Home extends Vue {
+  get userName(): string {
+    if (this.$store.state.user) {
+      return this.$store.state.user.displayName;
     }
+    return "";
   }
-});
+}
 </script>
