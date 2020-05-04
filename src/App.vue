@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts">
-import HeaderComponent from "@/components/Header.vue";
-import { auth } from "@/scripts/firebase";
-import { Unsubscribe } from "firebase";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import { auth } from "@/scripts/firebase";
+import { Unsubscribe } from "firebase";
+import HeaderComponent from "@/components/Header.vue";
 
 @Component({
   components: {
@@ -18,7 +18,7 @@ import { Component } from "vue-property-decorator";
   }
 })
 export default class App extends Vue {
-  detacher: Unsubscribe | undefined;
+  detacher: Unsubscribe | undefined = undefined;
   created() {
     this.detacher = auth.onAuthStateChanged(user => {
       console.log("auth uid=", user && user.uid);
