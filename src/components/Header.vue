@@ -16,8 +16,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
 import { auth } from "@/scripts/firebase";
 
+@Component
 export default class Header extends Vue {
   isActive = false;
   get hasUser(): boolean {
