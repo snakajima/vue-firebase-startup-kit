@@ -6,14 +6,12 @@
         <span v-if="chatroom">: {{ chatroom.title }}</span>
       </h1>
       <div>
-        <div
-          v-for="message in messages"
-          :key="message.id"
-        >{{message.ownerName}}: {{message.message}}</div>
+        <div v-for="message in messages" :key="message.id" class="chatFrame">
+          <div class="chatName">{{message.ownerName}}</div>
+          <div class="chatMessage">{{message.message}}</div>
+        </div>
       </div>
-      <b-field label="Message">
-        <b-input v-model="message" maxlength="200" type="textarea"></b-input>
-      </b-field>
+      <b-input v-model="message" maxlength="200" type="textarea"></b-input>
       <b-button @click="handlePost">Post</b-button>
     </div>
   </section>
@@ -64,3 +62,16 @@ export default class Chatroom extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.chatFrame {
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.chatName {
+  font-weight: bold;
+}
+.chatMessage {
+  padding-left: 1em;
+}
+</style>
