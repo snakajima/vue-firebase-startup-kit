@@ -2,8 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="title">
-        #
-        <span v-if="chatroom">{{ chatroom.title }}</span>
+        <span v-if="chatroom">#{{ chatroom.title }}</span>
       </h1>
       <div>
         <div v-for="message in messages" :key="message.id" class="chatFrame">
@@ -13,12 +12,18 @@
       </div>
       <div v-if="hasUser">
         <b-input v-model="message" maxlength="200" type="textarea"></b-input>
-        <b-button @click="handlePost">Post</b-button>
+        <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
       <div v-else>
         You need to
         <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate.
       </div>
+    </div>
+    <div class="source-link">
+      <a
+        target="_blank"
+        href="https://github.com/snakajima/vue-firebase-startup-kit/blob/playground/src/views/Chatroom.vue"
+      >View source code of thi page</a>
     </div>
   </section>
 </template>
@@ -35,6 +40,7 @@ export default class Chatroom extends Vue {
   detacher: firebase.Unsubscribe | undefined = undefined;
   refChatroom: firebase.firestore.DocumentReference | undefined = undefined;
   chatroom: any = null;
+
   async mounted() {
     console.log("mounted", this.$route.params.roomId);
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
@@ -51,17 +57,19 @@ export default class Chatroom extends Vue {
         });
       });
   }
+  destroyed() {
+    if (this.detacher) {
+      this.detacher();
+    }
+  }
+
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
   get pathHere(): string {
     return encodeURIComponent(window.location.pathname);
   }
-  destroyed() {
-    if (this.detacher) {
-      this.detacher();
-    }
-  }
+
   async handlePost() {
     await this.refChatroom!.collection("messages").add({
       owner: this.$store.state.user.uid,
@@ -84,5 +92,9 @@ export default class Chatroom extends Vue {
 }
 .chatMessage {
   padding-left: 1em;
+}
+.source-link {
+  margin-top: 0.5rem;
+  text-align: right;
 }
 </style>
