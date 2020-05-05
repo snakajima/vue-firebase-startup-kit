@@ -36,10 +36,10 @@ import { db, firestore } from "@/scripts/firebase";
 @Component
 export default class Chatroom extends Vue {
   message = "";
-  messages: Array<any> = [];
+  messages: Array<firebase.firestore.DocumentData> = [];
   detacher: firebase.Unsubscribe | undefined = undefined;
   refChatroom: firebase.firestore.DocumentReference | undefined = undefined;
-  chatroom: any = null;
+  chatroom: firebase.firestore.DocumentData | undefined | null = null;
 
   async mounted() {
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);

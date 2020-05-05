@@ -28,12 +28,11 @@ export default class Chat extends Vue {
   title = "";
   detacher: Unsubscribe | undefined = undefined;
   refChatrooms = db.collection(`chatrooms`);
-  chatrooms: Array<any> = [];
+  chatrooms: Array<firebase.firestore.DocumentData> = [];
   created() {
     this.detacher = this.refChatrooms
       .orderBy("timeCreated", "desc")
       .onSnapshot(snapshot => {
-        console.log(snapshot);
         this.chatrooms = snapshot.docs.map(doc => {
           const data = doc.data();
           data.id = doc.id;
@@ -47,7 +46,6 @@ export default class Chat extends Vue {
     }
   }
   async handleCreate() {
-    console.log("handleCreate");
     const doc = await this.refChatrooms.add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
