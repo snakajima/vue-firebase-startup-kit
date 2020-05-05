@@ -44,7 +44,7 @@ import { ChatRoom, Message } from "@/scripts/datatypes";
 export default class Chatroom extends Vue {
   message = "";
   messages: Array<Message> = [];
-  detacher?: firebase.Unsubscribe = undefined;
+  detacher?: firebase.Unsubscribe;
   refChatroom!: firebase.firestore.DocumentReference;
   chatroom: ChatRoom | null = null;
 
