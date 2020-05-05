@@ -17,12 +17,7 @@
         Please
         <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate in this channel.
       </div>
-      <div class="source-link">
-        <a
-          target="_blank"
-          href="https://github.com/snakajima/vue-firebase-startup-kit/blob/playground/src/views/Chatroom.vue"
-        >View source code of this page</a>
-      </div>
+      <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
       <b-loading active />
@@ -35,8 +30,13 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { ChatRoom, Message } from "@/scripts/datatypes";
+import SourceLink from "@/components/SourceLink.vue";
 
-@Component
+@Component({
+  components: {
+    SourceLink
+  }
+})
 export default class Chatroom extends Vue {
   message = "";
   messages: Array<Message> = [];
