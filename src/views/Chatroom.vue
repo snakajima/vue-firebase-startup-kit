@@ -5,12 +5,15 @@
       <div v-for="message in messages" :key="message.id" class="chatFrame">
         <div>
           <span class="chatName">{{message.ownerName}}</span>
-          <span class="chatTime">{{message.timeCreated.toDate().toLocaleString()}}</span>
+          <span
+            v-if="message.timeCreated"
+            class="chatTime"
+          >{{ message.timeCreated.toDate().toLocaleString()}}</span>
         </div>
         <div class="chatMessage">{{message.message}}</div>
       </div>
       <div v-if="hasUser">
-        <b-input v-model="message" maxlength="200" type="textarea"></b-input>
+        <b-input v-model="newMessage" maxlength="200" type="textarea"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
       <div v-else class="notification">
@@ -38,7 +41,7 @@ import SourceLink from "@/components/SourceLink.vue";
   }
 })
 export default class Chatroom extends Vue {
-  message = "";
+  newMessage = "";
   messages: Array<Message> = [];
   chatroom: ChatRoom | null = null;
   detacher?: firebase.Unsubscribe;
@@ -73,9 +76,9 @@ export default class Chatroom extends Vue {
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      message: this.message
+      message: this.newMessage
     });
-    this.message = "";
+    this.newMessage = "";
   }
 }
 </script>
