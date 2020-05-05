@@ -3,6 +3,7 @@ export interface ChatRoom {
 	owner: string;
 	ownerName: string;
 	title: string;
+	timeCreated: firebase.firestore.Timestamp;
 }
 
 export interface Message {
@@ -10,5 +11,6 @@ export interface Message {
 	ownerName: string;
 	owner: string;
 	message: string;
+	timeCreated: firebase.firestore.Timestamp;
 }
 

@@ -6,7 +6,10 @@
       </h1>
       <div>
         <div v-for="message in messages" :key="message.id" class="chatFrame">
-          <div class="chatName">{{message.ownerName}}</div>
+          <div>
+            <span class="chatName">{{message.ownerName}}</span>
+            <span class="chatTime">{{message.timeCreated.toDate().toLocaleString()}}</span>
+          </div>
           <div class="chatMessage">{{message.message}}</div>
         </div>
       </div>
@@ -88,6 +91,11 @@ export default class Chatroom extends Vue {
 }
 .chatName {
   font-weight: bold;
+}
+.chatTime {
+  margin-left: 0.5em;
+  font-size: 0.8em;
+  color: #808080;
 }
 .chatMessage {
   padding-left: 1em;
