@@ -2,8 +2,13 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Chat</h1>
-      <b-button @click="handleCreate">Create a Chat Room</b-button>
+      <b-field label="New Chat Channel">
+        <b-input v-model="title"></b-input>
+      </b-field>
+      <b-button @click="handleCreate">Create</b-button>
     </div>
+    <hr />
+    <h2>Your Channels</h2>
     <ul>
       <li v-for="room in chatrooms" :key="room.id">
         <router-link :to="`/chat/${room.id}`">{{room.title}}</router-link>
@@ -20,6 +25,7 @@ import { Unsubscribe } from "firebase";
 
 @Component
 export default class Chat extends Vue {
+  title = "";
   detacher: Unsubscribe | undefined = undefined;
   refChatrooms = db.collection(`chatrooms`);
   chatrooms: Array<any> = [];
@@ -46,7 +52,7 @@ export default class Chat extends Vue {
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: "(untitled)"
+      title: this.title
     });
     console.log("doc", doc);
   }

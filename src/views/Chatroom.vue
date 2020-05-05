@@ -23,7 +23,7 @@
       <a
         target="_blank"
         href="https://github.com/snakajima/vue-firebase-startup-kit/blob/playground/src/views/Chatroom.vue"
-      >View source code of thi page</a>
+      >View source code of this page</a>
     </div>
   </section>
 </template>
