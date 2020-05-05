@@ -14,9 +14,9 @@
         <b-input v-model="message" maxlength="200" type="textarea"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
-      <div v-else>
-        You need to
-        <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate.
+      <div v-else class="notification">
+        Please
+        <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate in this channel.
       </div>
     </div>
     <div class="source-link">
