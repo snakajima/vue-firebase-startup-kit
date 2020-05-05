@@ -28,6 +28,9 @@
         >View source code of this page</a>
       </div>
     </div>
+    <div v-else>
+      <b-loading active />
+    </div>
   </section>
 </template>
 
@@ -42,7 +45,7 @@ export default class Chatroom extends Vue {
   message = "";
   messages: Array<Message> = [];
   detacher?: firebase.Unsubscribe = undefined;
-  refChatroom?: firebase.firestore.DocumentReference = undefined;
+  refChatroom!: firebase.firestore.DocumentReference;
   chatroom: ChatRoom | null = null;
 
   async created() {
@@ -69,7 +72,7 @@ export default class Chatroom extends Vue {
   }
 
   async handlePost() {
-    await this.refChatroom!.collection("messages").add({
+    await this.refChatroom.collection("messages").add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
