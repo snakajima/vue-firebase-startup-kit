@@ -42,14 +42,12 @@ export default class Chatroom extends Vue {
   chatroom: any = null;
 
   async mounted() {
-    console.log("mounted", this.$route.params.roomId);
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
     this.chatroom = (await this.refChatroom.get()).data();
     this.detacher = this.refChatroom
       .collection("messages")
       .orderBy("timeCreated")
       .onSnapshot(snapshot => {
-        console.log(snapshot);
         this.messages = snapshot.docs.map(doc => {
           const data = doc.data();
           data.id = doc.id;
