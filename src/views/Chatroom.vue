@@ -32,18 +32,19 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
+import { ChatRoom, Message } from "@/scripts/datatypes";
 
 @Component
 export default class Chatroom extends Vue {
   message = "";
-  messages: Array<firebase.firestore.DocumentData> = [];
+  messages: Array<Message> = [];
   detacher: firebase.Unsubscribe | undefined = undefined;
   refChatroom: firebase.firestore.DocumentReference | undefined = undefined;
-  chatroom: firebase.firestore.DocumentData | undefined | null = null;
+  chatroom: ChatRoom | undefined | null = null;
 
   async mounted() {
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
-    this.chatroom = (await this.refChatroom.get()).data();
+    this.chatroom = (await this.refChatroom.get()).data() as Chat;
     this.detacher = this.refChatroom
       .collection("messages")
       .orderBy("timeCreated")
@@ -51,7 +52,7 @@ export default class Chatroom extends Vue {
         this.messages = snapshot.docs.map(doc => {
           const data = doc.data();
           data.id = doc.id;
-          return data;
+          return data as Message;
         });
       });
   }

@@ -22,13 +22,14 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
+import { ChatRoom } from "@/scripts/datatypes";
 
 @Component
 export default class Chat extends Vue {
   title = "";
   detacher: Unsubscribe | undefined = undefined;
   refChatrooms = db.collection(`chatrooms`);
-  chatrooms: Array<firebase.firestore.DocumentData> = [];
+  chatrooms: Array<ChatRoom> = [];
   created() {
     this.detacher = this.refChatrooms
       .orderBy("timeCreated", "desc")
@@ -36,7 +37,7 @@ export default class Chat extends Vue {
         this.chatrooms = snapshot.docs.map(doc => {
           const data = doc.data();
           data.id = doc.id;
-          return data;
+          return data as ChatRoom;
         });
       });
   }
