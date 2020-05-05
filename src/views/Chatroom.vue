@@ -40,12 +40,10 @@ import SourceLink from "@/components/SourceLink.vue";
 export default class Chatroom extends Vue {
   message = "";
   messages: Array<Message> = [];
-  detacher?: firebase.Unsubscribe;
-  refChatroom!: firebase.firestore.DocumentReference;
   chatroom: ChatRoom | null = null;
+  detacher?: firebase.Unsubscribe;
 
   async created() {
-    this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
     this.detacher = this.refChatroom
       .collection("messages")
       .orderBy("timeCreated")
@@ -60,6 +58,9 @@ export default class Chatroom extends Vue {
     this.detacher && this.detacher();
   }
 
+  get refChatroom(): firebase.firestore.DocumentReference {
+    return db.doc(`chatrooms/${this.$route.params.roomId}`);
+  }
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
