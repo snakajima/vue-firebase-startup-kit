@@ -53,16 +53,12 @@ export default class Chatroom extends Vue {
       .orderBy("timeCreated")
       .onSnapshot(snapshot => {
         this.messages = snapshot.docs.map(doc => {
-          const data = doc.data();
-          data.id = doc.id;
-          return data as Message;
+          return Object.assign(doc.data(), { id: doc.id }) as Message;
         });
       });
   }
   destroyed() {
-    if (this.detacher) {
-      this.detacher();
-    }
+    this.detacher && this.detacher();
   }
 
   get hasUser(): boolean {

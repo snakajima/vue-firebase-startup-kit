@@ -30,22 +30,20 @@ export default class Chat extends Vue {
   detacher: Unsubscribe | undefined = undefined;
   refChatrooms = db.collection(`chatrooms`);
   chatrooms: Array<ChatRoom> = [];
+
   created() {
     this.detacher = this.refChatrooms
       .orderBy("timeCreated", "desc")
       .onSnapshot(snapshot => {
         this.chatrooms = snapshot.docs.map(doc => {
-          const data = doc.data();
-          data.id = doc.id;
-          return data as ChatRoom;
+          return Object.assign(doc.data(), { id: doc.id }) as ChatRoom;
         });
       });
   }
   destroyed() {
-    if (this.detacher) {
-      this.detacher();
-    }
+    this.detacher && this.detacher();
   }
+
   async handleCreate() {
     const doc = await this.refChatrooms.add({
       owner: this.$store.state.user.uid,
