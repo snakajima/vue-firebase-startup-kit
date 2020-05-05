@@ -2,8 +2,8 @@
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Chatroom
-        <span v-if="chatroom">: {{ chatroom.title }}</span>
+        #
+        <span v-if="chatroom">{{ chatroom.title }}</span>
       </h1>
       <div>
         <div v-for="message in messages" :key="message.id" class="chatFrame">
@@ -11,8 +11,14 @@
           <div class="chatMessage">{{message.message}}</div>
         </div>
       </div>
-      <b-input v-model="message" maxlength="200" type="textarea"></b-input>
-      <b-button @click="handlePost">Post</b-button>
+      <div v-if="hasUser">
+        <b-input v-model="message" maxlength="200" type="textarea"></b-input>
+        <b-button @click="handlePost">Post</b-button>
+      </div>
+      <div v-else>
+        You need to
+        <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate.
+      </div>
     </div>
   </section>
 </template>
@@ -21,13 +27,12 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
-import { Unsubscribe } from "firebase";
 
 @Component
 export default class Chatroom extends Vue {
   message = "";
   messages: Array<any> = [];
-  detacher: Unsubscribe | undefined = undefined;
+  detacher: firebase.Unsubscribe | undefined = undefined;
   refChatroom: firebase.firestore.DocumentReference | undefined = undefined;
   chatroom: any = null;
   async mounted() {
@@ -45,6 +50,12 @@ export default class Chatroom extends Vue {
           return data;
         });
       });
+  }
+  get hasUser(): boolean {
+    return !!this.$store.state.user;
+  }
+  get pathHere(): string {
+    return encodeURIComponent(window.location.pathname);
   }
   destroyed() {
     if (this.detacher) {

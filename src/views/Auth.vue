@@ -14,8 +14,14 @@ export default class Auth extends Vue {
   mounted() {
     ui.start("#firebaseui-auth-container", {
       signInOptions: [authObject.EmailAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: "/"
+      signInSuccessUrl: this.from
     });
+  }
+  get from(): string {
+    if (this.$route.query.from) {
+      return this.$route.query.from as string;
+    }
+    return "/";
   }
 }
 </script>
