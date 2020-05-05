@@ -27,7 +27,7 @@ import { ChatRoom } from "@/scripts/datatypes";
 @Component
 export default class Chat extends Vue {
   title = "";
-  detacher: Unsubscribe | undefined = undefined;
+  detacher?: Unsubscribe;
   refChatrooms = db.collection(`chatrooms`);
   chatrooms: Array<ChatRoom> = [];
 

@@ -1,17 +1,13 @@
 <template>
   <section class="section">
     <div class="container" v-if="chatroom">
-      <h1 class="title">
-        <span>#{{ chatroom.title }}</span>
-      </h1>
-      <div>
-        <div v-for="message in messages" :key="message.id" class="chatFrame">
-          <div>
-            <span class="chatName">{{message.ownerName}}</span>
-            <span class="chatTime">{{message.timeCreated.toDate().toLocaleString()}}</span>
-          </div>
-          <div class="chatMessage">{{message.message}}</div>
+      <h1 class="title">#{{ chatroom.title }}</h1>
+      <div v-for="message in messages" :key="message.id" class="chatFrame">
+        <div>
+          <span class="chatName">{{message.ownerName}}</span>
+          <span class="chatTime">{{message.timeCreated.toDate().toLocaleString()}}</span>
         </div>
+        <div class="chatMessage">{{message.message}}</div>
       </div>
       <div v-if="hasUser">
         <b-input v-model="message" maxlength="200" type="textarea"></b-input>
@@ -50,7 +46,6 @@ export default class Chatroom extends Vue {
 
   async created() {
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
-    this.chatroom = (await this.refChatroom.get()).data() as ChatRoom;
     this.detacher = this.refChatroom
       .collection("messages")
       .orderBy("timeCreated")
@@ -59,6 +54,7 @@ export default class Chatroom extends Vue {
           return Object.assign(doc.data(), { id: doc.id }) as Message;
         });
       });
+    this.chatroom = (await this.refChatroom.get()).data() as ChatRoom;
   }
   destroyed() {
     this.detacher && this.detacher();
