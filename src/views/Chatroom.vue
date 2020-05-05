@@ -43,7 +43,7 @@ export default class Chatroom extends Vue {
   messages: Array<Message> = [];
   detacher?: firebase.Unsubscribe = undefined;
   refChatroom?: firebase.firestore.DocumentReference = undefined;
-  chatroom: ChatRoom | undefined | null = null;
+  chatroom: ChatRoom | null = null;
 
   async created() {
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
