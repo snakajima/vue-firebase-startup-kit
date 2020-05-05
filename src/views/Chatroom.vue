@@ -1,8 +1,8 @@
 <template>
   <section class="section">
-    <div class="container">
+    <div class="container" v-if="chatroom">
       <h1 class="title">
-        <span v-if="chatroom">#{{ chatroom.title }}</span>
+        <span>#{{ chatroom.title }}</span>
       </h1>
       <div>
         <div v-for="message in messages" :key="message.id" class="chatFrame">
@@ -21,12 +21,12 @@
         Please
         <router-link :to="`/auth?from=${pathHere}`">sign in</router-link>&nbsp;to participate in this channel.
       </div>
-    </div>
-    <div class="source-link">
-      <a
-        target="_blank"
-        href="https://github.com/snakajima/vue-firebase-startup-kit/blob/playground/src/views/Chatroom.vue"
-      >View source code of this page</a>
+      <div class="source-link">
+        <a
+          target="_blank"
+          href="https://github.com/snakajima/vue-firebase-startup-kit/blob/playground/src/views/Chatroom.vue"
+        >View source code of this page</a>
+      </div>
     </div>
   </section>
 </template>
@@ -45,7 +45,7 @@ export default class Chatroom extends Vue {
   refChatroom?: firebase.firestore.DocumentReference = undefined;
   chatroom: ChatRoom | undefined | null = null;
 
-  async mounted() {
+  async created() {
     this.refChatroom = db.doc(`chatrooms/${this.$route.params.roomId}`);
     this.chatroom = (await this.refChatroom.get()).data() as ChatRoom;
     this.detacher = this.refChatroom
