@@ -54,7 +54,7 @@ export default {
     };
   },
   mounted() {
-    this.editor = new Editor({
+    const options = {
       extensions: [
         new Blockquote(),
         new CodeBlock(),
@@ -73,10 +73,13 @@ export default {
         new Underline(),
         new History()
       ],
-      content: this.content,
       onUpdate: this.handleUpdate,
       editable: !this.readonly
-    });
+    };
+    if (this.content) {
+      options.content = this.content;
+    }
+    this.editor = new Editor(options);
   },
   beforeDestroy() {
     this.editor.destroy();

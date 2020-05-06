@@ -10,6 +10,7 @@
         <div>
           <b-button @click="handleSave" :disabled="!editor" type="is-primary">Save</b-button>
           <b-button @click="handleCancel">Cancel</b-button>
+          <b-button @click="handleDelete" type="is-danger">Delete</b-button>
         </div>
       </div>
       <div v-else>
@@ -54,18 +55,24 @@ export default class Blog extends Vue {
     this.editor = editor;
   }
   async handleSave() {
-    const content = this.editor.getJSON();
-    console.log("handleSave", this.editor.getJSON());
-    await this.refArticle.set({ content }, { merge: true });
+    this.article!.content = this.editor.getJSON();
+    await this.refArticle.set(
+      { content: this.article!.content },
+      { merge: true }
+    );
   }
   handleCancel() {
     if (this.editor) {
-      this.editor.setContent(this.article!.content);
+      this.editor.setContent(this.article!.content || "");
     }
     this.editMode = false;
   }
   handleEdit() {
     this.editMode = true;
+  }
+  async handleDelete() {
+    await this.refArticle.delete();
+    this.$router.push("/blog");
   }
 
   get refArticle(): firebase.firestore.DocumentReference {
