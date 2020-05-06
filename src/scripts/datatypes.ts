@@ -20,5 +20,6 @@ export interface BlogArticle {
 	ownerName: string;
 	title: string;
 	timeCreated: firebase.firestore.Timestamp;
+	content: any;
 }
 

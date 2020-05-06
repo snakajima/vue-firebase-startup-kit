@@ -1,9 +1,20 @@
 <template>
   <section class="section">
     <div class="container" v-if="article">
-      <h1 class="title">{{ article.title }}</h1>
-      <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
-      <b-button @click="handleSave">Save</b-button>
+      <h1 class="title">
+        {{ article.title }}
+        <b-button v-if="isOwner && !editMode" @click="handleEdit">Edit</b-button>
+      </h1>
+      <div v-if="isOwner && editMode">
+        <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
+        <div>
+          <b-button @click="handleSave" :disabled="!editor" type="is-primary">Save</b-button>
+          <b-button @click="handleCancel">Cancel</b-button>
+        </div>
+      </div>
+      <div v-else>
+        <rich-text-editor :content="article.content" :readonly="true" />
+      </div>
       <source-link path="views/BlogArticle.vue" />
     </div>
     <div v-else>
@@ -27,9 +38,10 @@ import RichTextEditor from "@/components/RichTextEditor.vue";
   }
 })
 export default class Blog extends Vue {
+  editMode = true;
   article: BlogArticle | null = null;
   detacher?: firebase.Unsubscribe;
-  editor?: any;
+  editor: any | null = null;
 
   async created() {
     this.article = (await this.refArticle.get()).data() as BlogArticle;
@@ -46,9 +58,24 @@ export default class Blog extends Vue {
     console.log("handleSave", this.editor.getJSON());
     await this.refArticle.set({ content }, { merge: true });
   }
+  handleCancel() {
+    if (this.editor) {
+      this.editor.setContent(this.article!.content);
+    }
+    this.editMode = false;
+  }
+  handleEdit() {
+    this.editMode = true;
+  }
 
   get refArticle(): firebase.firestore.DocumentReference {
     return db.doc(`articles/${this.$route.params.articleId}`);
+  }
+  get isOwner() {
+    return (
+      this.$store.state.user &&
+      this.article!.owner === this.$store.state.user.uid
+    );
   }
 }
 </script>

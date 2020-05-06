@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+      <editor-menu-bar v-if="!readonly" :editor="editor" v-slot="{ commands, isActive }">
         <div>
           <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
         </div>
       </editor-menu-bar>
-      <div class="editor-frame">
+      <div :class="readonly ? 'readonly-frame' : 'editor-frame'">
         <editor-content class="editor-box" :editor="editor" />
       </div>
     </div>
@@ -43,6 +43,9 @@ export default {
   props: {
     content: {
       type: Object
+    },
+    readonly: {
+      type: Boolean
     }
   },
   data() {
@@ -71,7 +74,8 @@ export default {
         new History()
       ],
       content: this.content,
-      onUpdate: this.handleUpdate
+      onUpdate: this.handleUpdate,
+      editable: !this.readonly
     });
   },
   beforeDestroy() {
@@ -81,6 +85,11 @@ export default {
     showMenu() {
       console.log(this.id, this.focus);
       return this.id === this.focus;
+    }
+  },
+  watch: {
+    readonly(newValue) {
+      this.editor.setOptions({ editable: !newValue });
     }
   },
   methods: {
@@ -101,6 +110,10 @@ export default {
   resize: vertical;
   padding: 0.5rem;
   outline: 1px solid grey;
+  margin-bottom: 0.5rem;
+}
+.readonly-frame {
+  padding: 0.5rem;
 }
 
 .editor-box p {
