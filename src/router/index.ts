@@ -35,7 +35,11 @@ const routes: Array<RouteConfig> = [
 	{
 		path: '/blog',
 		component: () => import('../views/Blog.vue')
-	}
+	},
+	{
+		path: '/blog/:articleId',
+		component: () => import('../views/BlogArticle.vue')
+	},
 ]
 
 const router = new VueRouter({
