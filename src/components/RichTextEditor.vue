@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-icon pack="fa" icon="check" size="is-small" />
     <div>
       <editor-menu-bar v-if="!readonly" :editor="editor" v-slot="{ commands, isActive }">
         <div>
