@@ -58,6 +58,7 @@ export default class Blog extends Vue {
       title: this.title
     });
     console.log("doc", doc);
+    this.$router.push(`/blog/${doc.id}?edit`);
   }
 }
 </script>
