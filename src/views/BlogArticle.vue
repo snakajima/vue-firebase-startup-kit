@@ -1,14 +1,17 @@
 <template>
   <section class="section">
     <div class="container" v-if="article">
-      <h1 class="title">
+      <h1 v-if="isOwner && !editMode" class="title">
         {{ article.title }}
-        <b-button v-if="isOwner && !editMode" @click="handleEdit">Edit</b-button>
+        <b-button @click="handleEdit">Edit</b-button>
       </h1>
+      <div v-else style="margin-bottom: 0.5rem">
+        <b-input v-model="title" @input="handleChange" />
+      </div>
       <div v-if="isOwner && editMode">
         <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
         <div>
-          <b-button @click="handleSave" :disabled="!editor" type="is-primary">Save</b-button>
+          <b-button @click="handleSave" :disabled="!isChanged" type="is-primary">Save</b-button>
           <b-button @click="handleCancel">Cancel</b-button>
           <b-button @click="handleDelete" type="is-danger">Delete</b-button>
         </div>
@@ -40,12 +43,15 @@ import RichTextEditor from "@/components/RichTextEditor.vue";
 })
 export default class Blog extends Vue {
   editMode = false;
+  isChanged = false;
+  title = "";
   article: BlogArticle | null = null;
   detacher?: firebase.Unsubscribe;
   editor: any | null = null;
 
   async created() {
     this.article = (await this.refArticle.get()).data() as BlogArticle;
+    this.title = this.article.title;
   }
   mounted() {
     if (this.$route.query.edit) {
@@ -56,21 +62,31 @@ export default class Blog extends Vue {
     this.detacher && this.detacher();
   }
   handleUpdate(editor: object) {
+    this.isChanged = true;
     this.editor = editor;
   }
+  handleChange() {
+    this.isChanged = true;
+  }
   async handleSave() {
-    this.article!.content = this.editor.getJSON();
+    if (this.editor) {
+      this.article!.content = this.editor.getJSON();
+    }
+    this.article!.title = this.title;
     await this.refArticle.set(
-      { content: this.article!.content },
+      { content: this.article!.content, title: this.title },
       { merge: true }
     );
     this.editMode = false;
+    this.isChanged = false;
   }
   handleCancel() {
     if (this.editor) {
       this.editor.setContent(this.article!.content || "");
     }
+    this.title = this.article!.title;
     this.editMode = false;
+    this.isChanged = false;
   }
   handleEdit() {
     this.editMode = true;

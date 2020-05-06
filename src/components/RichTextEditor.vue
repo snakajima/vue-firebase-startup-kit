@@ -1,15 +1,42 @@
 <template>
   <div>
-    <b-icon pack="fa" icon="check" size="is-small" />
     <div>
       <editor-menu-bar v-if="!readonly" :editor="editor" v-slot="{ commands, isActive }">
-        <div>
+        <div style="margin-bottom:1px">
           <b-button
-            :class="{ 'is-active': isActive.bold() }"
+            size="is-small"
             @click="commands.bold"
-            icon-left="delete"
+            :type="isActive.bold() ? 'is-dark':'is-light'"
           >
             <i class="fas fa-bold"></i>
+          </b-button>
+          <b-button
+            size="is-small"
+            @click="commands.italic"
+            :type="isActive.italic() ? 'is-dark':'is-light'"
+          >
+            <i class="fas fa-italic"></i>
+          </b-button>
+          <b-button
+            size="is-small"
+            @click="commands.underline"
+            :type="isActive.underline() ? 'is-dark':'is-light'"
+          >
+            <i class="fas fa-underline"></i>
+          </b-button>
+          <b-button
+            size="is-small"
+            @click="commands.bullet_list"
+            :type="isActive.bullet_list() ? 'is-dark':'is-light'"
+          >
+            <i class="fas fa-list"></i>
+          </b-button>
+          <b-button
+            size="is-small"
+            @click="commands.ordered_list"
+            :type="isActive.ordered_list() ? 'is-dark':'is-light'"
+          >
+            <i class="fas fa-list-ol"></i>
           </b-button>
         </div>
       </editor-menu-bar>
@@ -128,7 +155,11 @@ export default {
 }
 
 .editor-box p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+}
+.editor-box li {
+  margin-left: 1rem;
+}
+.editor-box ul {
+  list-style-type: disc;
 }
 </style>
