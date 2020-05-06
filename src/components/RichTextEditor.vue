@@ -79,4 +79,8 @@ export default {
 .ProseMirror:focus {
   outline: 1px #dddddd solid;
 }
+.editor-box p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 </style>
