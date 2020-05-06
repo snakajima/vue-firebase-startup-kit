@@ -2,6 +2,7 @@
   <section class="section">
     <div class="container" v-if="article">
       <h1 class="title">{{ article.title }}</h1>
+      <source-link path="views/BlogArticle.vue" />
     </div>
     <div v-else>
       <b-loading active />

@@ -14,6 +14,7 @@
         <router-link :to="`/blog/${article.id}`">{{article.title}}</router-link>
       </li>
     </ul>
+    <source-link path="views/Blog.vue" />
   </section>
 </template>
 
@@ -23,8 +24,13 @@ import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
 import { BlogArticle } from "@/scripts/datatypes";
+import SourceLink from "@/components/SourceLink.vue";
 
-@Component
+@Component({
+  components: {
+    SourceLink
+  }
+})
 export default class Blog extends Vue {
   title = "";
   detacher?: Unsubscribe;

@@ -16,3 +16,9 @@ export default class SourceLink extends Vue {
   @Prop() readonly path!: string;
 }
 </script>
+
+<style lang="sass">
+.source-link
+	margin-top: 0.5rem
+	text-align: right
+</style>

@@ -99,8 +99,4 @@ export default class Chatroom extends Vue {
 .chatMessage {
   padding-left: 1em;
 }
-.source-link {
-  margin-top: 0.5rem;
-  text-align: right;
-}
 </style>
