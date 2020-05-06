@@ -14,3 +14,11 @@ export interface Message {
 	timeCreated: firebase.firestore.Timestamp;
 }
 
+export interface BlogArticle {
+	id: string;
+	owner: string;
+	ownerName: string;
+	title: string;
+	timeCreated: firebase.firestore.Timestamp;
+}
+

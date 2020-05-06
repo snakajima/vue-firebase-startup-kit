@@ -31,6 +31,10 @@ const routes: Array<RouteConfig> = [
 	{
 		path: '/chat/:roomId',
 		component: () => import('../views/Chatroom.vue')
+	},
+	{
+		path: '/blog',
+		component: () => import('../views/Blog.vue')
 	}
 ]
 

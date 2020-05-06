@@ -9,6 +9,14 @@ service cloud.firestore {
 				allow read: if true;
 			}
 		}
+		match /articles/{articleId} {
+			allow write: if request.auth.uid == request.resource.data.owner; 
+			allow read: if true;
+			match /sections/{sectionId} {
+  			allow write: if request.auth.uid == request.resource.data.owner; 
+				allow read: if true;
+			}
+		}
     match /{document=**} {
       allow read, write: if false;
     }
