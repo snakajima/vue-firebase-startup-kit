@@ -3,7 +3,13 @@
     <div>
       <editor-menu-bar v-if="!readonly" :editor="editor" v-slot="{ commands, isActive }">
         <div>
-          <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
+          <b-button
+            :class="{ 'is-active': isActive.bold() }"
+            @click="commands.bold"
+            icon-left="delete"
+          >
+            <i class="fas fa-bold"></i>
+          </b-button>
         </div>
       </editor-menu-bar>
       <div :class="readonly ? 'readonly-frame' : 'editor-frame'">
@@ -74,7 +80,8 @@ export default {
         new History()
       ],
       onUpdate: this.handleUpdate,
-      editable: !this.readonly
+      editable: !this.readonly,
+      autoFocus: !this.readonly
     };
     if (this.content) {
       options.content = this.content;
@@ -92,7 +99,7 @@ export default {
   },
   watch: {
     readonly(newValue) {
-      this.editor.setOptions({ editable: !newValue });
+      this.editor.setOptions({ editable: !newValue, autoFocus: !newValue });
     }
   },
   methods: {

@@ -39,7 +39,7 @@ import RichTextEditor from "@/components/RichTextEditor.vue";
   }
 })
 export default class Blog extends Vue {
-  editMode = true;
+  editMode = false;
   article: BlogArticle | null = null;
   detacher?: firebase.Unsubscribe;
   editor: any | null = null;
@@ -47,11 +47,15 @@ export default class Blog extends Vue {
   async created() {
     this.article = (await this.refArticle.get()).data() as BlogArticle;
   }
+  mounted() {
+    if (this.$route.query.edit) {
+      this.editMode = true;
+    }
+  }
   destroyed() {
     this.detacher && this.detacher();
   }
   handleUpdate(editor: object) {
-    console.log(editor);
     this.editor = editor;
   }
   async handleSave() {
@@ -60,6 +64,7 @@ export default class Blog extends Vue {
       { content: this.article!.content },
       { merge: true }
     );
+    this.editMode = false;
   }
   handleCancel() {
     if (this.editor) {
