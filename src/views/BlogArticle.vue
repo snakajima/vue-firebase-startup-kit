@@ -2,8 +2,8 @@
   <section class="section">
     <div class="container" v-if="article">
       <h1 class="title">{{ article.title }}</h1>
-      <rich-text-editor id="1" @onFocus="handleFocus" :focus="focus" />
-      <rich-text-editor id="2" @onFocus="handleFocus" :focus="focus" />
+      <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
+      <b-button @click="handleSave">Save</b-button>
       <source-link path="views/BlogArticle.vue" />
     </div>
     <div v-else>
@@ -28,8 +28,8 @@ import RichTextEditor from "@/components/RichTextEditor.vue";
 })
 export default class Blog extends Vue {
   article: BlogArticle | null = null;
-  focus = "invalid";
   detacher?: firebase.Unsubscribe;
+  editor?: any;
 
   async created() {
     this.article = (await this.refArticle.get()).data() as BlogArticle;
@@ -37,9 +37,14 @@ export default class Blog extends Vue {
   destroyed() {
     this.detacher && this.detacher();
   }
-  handleFocus(id: string) {
-    console.log("handleFocus", id);
-    this.focus = id;
+  handleUpdate(editor: object) {
+    console.log(editor);
+    this.editor = editor;
+  }
+  async handleSave() {
+    const content = this.editor.getJSON();
+    console.log("handleSave", this.editor.getJSON());
+    await this.refArticle.set({ content }, { merge: true });
   }
 
   get refArticle(): firebase.firestore.DocumentReference {

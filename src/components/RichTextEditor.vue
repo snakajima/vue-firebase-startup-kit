@@ -1,14 +1,14 @@
 <template>
   <div>
     <div>
-      <editor-menu-bar v-if="showMenu" :editor="editor" v-slot="{ commands, isActive }">
-        <div style="position:absolute">
-          <div style="position:relative; top:-2rem">
-            <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
-          </div>
+      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+        <div>
+          <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
         </div>
       </editor-menu-bar>
-      <editor-content class="editor-box" :editor="editor" />
+      <div class="editor-frame">
+        <editor-content class="editor-box" :editor="editor" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,8 +41,9 @@ export default {
     EditorMenuBar
   },
   props: {
-    id: { type: String, required: true },
-    focus: { type: String }
+    content: {
+      type: Object
+    }
   },
   data() {
     return {
@@ -69,10 +70,8 @@ export default {
         new Underline(),
         new History()
       ],
-      content: "<p>This is just a boring paragraph</p><p>Foo</p>",
-      onUpdate: this.handleUpdate,
-      onFocus: this.handleFocus,
-      onBlur: this.handleBlur
+      content: this.content,
+      onUpdate: this.handleUpdate
     });
   },
   beforeDestroy() {
@@ -85,12 +84,8 @@ export default {
     }
   },
   methods: {
-    handleUpdate(foo) {
-      console.log(foo.getJSON());
-    },
-    handleFocus() {
-      console.log("handleFocus");
-      this.$emit("onFocus", this.id);
+    handleUpdate() {
+      this.$emit("onUpdate", this.editor);
     }
   }
 };
@@ -98,8 +93,16 @@ export default {
 
 <style>
 .ProseMirror:focus {
-  outline: 1px #dddddd solid;
+  outline: none;
 }
+.editor-frame {
+  height: 20rem;
+  overflow: scroll;
+  resize: vertical;
+  padding: 0.5rem;
+  outline: 1px solid grey;
+}
+
 .editor-box p {
   margin-top: 1rem;
   margin-bottom: 1rem;
