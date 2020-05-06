@@ -1,8 +1,12 @@
 <template>
   <div>
     <div>
-      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-        <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
+      <editor-menu-bar v-if="showMenu" :editor="editor" v-slot="{ commands, isActive }">
+        <div style="position:absolute">
+          <div style="position:relative; top:-2rem">
+            <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">Bold</button>
+          </div>
+        </div>
       </editor-menu-bar>
       <editor-content class="editor-box" :editor="editor" />
     </div>
@@ -10,6 +14,7 @@
 </template>
 
 <script>
+// https://github.com/scrumpy/tiptap
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import {
   Blockquote,
@@ -34,6 +39,10 @@ export default {
   components: {
     EditorContent,
     EditorMenuBar
+  },
+  props: {
+    id: { type: String, required: true },
+    focus: { type: String }
   },
   data() {
     return {
@@ -61,15 +70,27 @@ export default {
         new History()
       ],
       content: "<p>This is just a boring paragraph</p><p>Foo</p>",
-      onUpdate: this.handleUpdate
+      onUpdate: this.handleUpdate,
+      onFocus: this.handleFocus,
+      onBlur: this.handleBlur
     });
   },
   beforeDestroy() {
     this.editor.destroy();
   },
+  computed: {
+    showMenu() {
+      console.log(this.id, this.focus);
+      return this.id === this.focus;
+    }
+  },
   methods: {
     handleUpdate(foo) {
       console.log(foo.getJSON());
+    },
+    handleFocus() {
+      console.log("handleFocus");
+      this.$emit("onFocus", this.id);
     }
   }
 };
