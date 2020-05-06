@@ -2,6 +2,7 @@
   <section class="section">
     <div class="container" v-if="article">
       <h1 class="title">{{ article.title }}</h1>
+      <rich-text-editor />
       <source-link path="views/BlogArticle.vue" />
     </div>
     <div v-else>
@@ -16,10 +17,12 @@ import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { BlogArticle } from "@/scripts/datatypes";
 import SourceLink from "@/components/SourceLink.vue";
+import RichTextEditor from "@/components/RichTextEditor.vue";
 
 @Component({
   components: {
-    SourceLink
+    SourceLink,
+    RichTextEditor
   }
 })
 export default class Blog extends Vue {
