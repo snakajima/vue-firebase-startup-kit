@@ -4,7 +4,7 @@
       <div v-if="isOwner">
         <h1 v-if="!editMode" class="title">
           {{ article.title }}
-          <b-button @click="handleEdit">Edit</b-button>
+          <b-button @click="handleEdit" icon-left="fas fa-edit">Edit</b-button>
         </h1>
         <div v-else style="margin-bottom: 0.5rem">
           <b-input v-model="title" @input="handleChange" />
@@ -16,9 +16,14 @@
       <div v-if="isOwner && editMode">
         <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
         <div>
-          <b-button @click="handleSave" :disabled="!isChanged" type="is-primary">Save</b-button>
-          <b-button @click="handleCancel">Cancel</b-button>
-          <b-button @click="handleDelete" type="is-danger">Delete</b-button>
+          <b-button
+            @click="handleSave"
+            :disabled="!isChanged"
+            type="is-primary"
+            icon-left="fas fa-save"
+          >Save</b-button>
+          <b-button @click="handleCancel" icon-left="fas fa-window-close">Cancel</b-button>
+          <b-button @click="handleDelete" type="is-danger" icon-left="fas fa-trash">Delete</b-button>
         </div>
       </div>
       <div v-else>

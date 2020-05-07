@@ -5,39 +5,48 @@
         <div style="margin-bottom:1px">
           <b-button
             size="is-small"
+            @click="commands.undo"
+            type="is-light"
+            :disabled="commands.undoDepth() === 0"
+            icon-left="fas fa-undo"
+          />
+          <b-button
+            size="is-small"
+            @click="commands.redo"
+            type="is-light"
+            :disabled="commands.redoDepth() === 0"
+            icon-left="fas fa-redo"
+          />
+          <b-button
+            size="is-small"
             @click="commands.bold"
             :type="isActive.bold() ? 'is-dark':'is-light'"
-          >
-            <i class="fas fa-bold"></i>
-          </b-button>
+            icon-left="fas fa-bold"
+          />
           <b-button
             size="is-small"
             @click="commands.italic"
             :type="isActive.italic() ? 'is-dark':'is-light'"
-          >
-            <i class="fas fa-italic"></i>
-          </b-button>
+            icon-left="fas fa-italic"
+          />
           <b-button
             size="is-small"
             @click="commands.underline"
             :type="isActive.underline() ? 'is-dark':'is-light'"
-          >
-            <i class="fas fa-underline"></i>
-          </b-button>
+            icon-left="fas fa-underline"
+          />
           <b-button
             size="is-small"
             @click="commands.bullet_list"
             :type="isActive.bullet_list() ? 'is-dark':'is-light'"
-          >
-            <i class="fas fa-list"></i>
-          </b-button>
+            icon-left="fas fa-list"
+          />
           <b-button
             size="is-small"
             @click="commands.ordered_list"
             :type="isActive.ordered_list() ? 'is-dark':'is-light'"
-          >
-            <i class="fas fa-list-ol"></i>
-          </b-button>
+            icon-left="fas fa-list-ol"
+          />
         </div>
       </editor-menu-bar>
       <div :class="readonly ? 'readonly-frame' : 'editor-frame'">
