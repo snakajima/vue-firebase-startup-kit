@@ -31,3 +31,10 @@ export interface TodoList {
 	timeCreated: firebase.firestore.Timestamp;
 }
 
+export interface TodoItem {
+	id: string;
+	ownerName: string;
+	owner: string;
+	title: string;
+	timeCreated: firebase.firestore.Timestamp;
+}

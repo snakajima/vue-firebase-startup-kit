@@ -6,6 +6,7 @@
         <b-input v-model="newItem" maxlength="200"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
+      <div v-for="item in todoitems" :key="item.id">{{ item.title }}</div>
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -18,7 +19,7 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
-import { TodoList } from "@/scripts/datatypes";
+import { TodoList, TodoItem } from "@/scripts/datatypes";
 import SourceLink from "@/components/SourceLink.vue";
 
 @Component({
@@ -29,23 +30,22 @@ import SourceLink from "@/components/SourceLink.vue";
 export default class Chatroom extends Vue {
   newItem = "";
   todolist: TodoList | null = null;
+  todoitems: Array<TodoItem> = [];
   detacher?: firebase.Unsubscribe;
 
   async created() {
-    /*
     this.detacher = this.refTodoList
-      .collection("messages")
+      .collection("todoitems")
       .orderBy("timeCreated")
       .onSnapshot(snapshot => {
-        this.messages = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id }) as Message;
+        this.todoitems = snapshot.docs.map(doc => {
+          return Object.assign(doc.data(), { id: doc.id }) as TodoItem;
         });
-			});
-		*/
+      });
     this.todolist = (await this.refTodoList.get()).data() as TodoList;
   }
   destroyed() {
-    //this.detacher && this.detacher();
+    this.detacher && this.detacher();
   }
 
   get refTodoList(): firebase.firestore.DocumentReference {
@@ -60,7 +60,7 @@ export default class Chatroom extends Vue {
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      message: this.newItem
+      title: this.newItem
     });
     this.newItem = "";
   }
