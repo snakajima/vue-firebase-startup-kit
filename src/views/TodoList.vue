@@ -6,7 +6,13 @@
         <b-input v-model="newItem" maxlength="200"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
-      <div v-for="item in todoitems" :key="item.id">{{ item.title }}</div>
+      <div v-for="item in todoitems" :key="item.id">
+        <i
+          :class="{far:true, 'fa-square':!item.completed, 'fa-check-square':item.completed}"
+          @click="handleCheck(item.id)"
+        />
+        {{ item.title }}
+      </div>
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -54,15 +60,31 @@ export default class Chatroom extends Vue {
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
+  get itemMap(): any {
+    return this.todoitems.reduce((ret: any, item) => {
+      ret[item.id] = item;
+      return ret;
+    }, {});
+  }
 
   async handlePost() {
     await this.refTodoList.collection("todoitems").add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: this.newItem
+      title: this.newItem,
+      completed: false
     });
     this.newItem = "";
+  }
+  async handleCheck(id: string) {
+    const item = this.itemMap[id] as TodoItem;
+    await this.refTodoList
+      .collection("todoitems")
+      .doc(id)
+      .update({
+        completed: !item.completed
+      });
   }
 }
 </script>

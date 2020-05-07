@@ -37,4 +37,5 @@ export interface TodoItem {
 	owner: string;
 	title: string;
 	timeCreated: firebase.firestore.Timestamp;
+	completed: boolean;
 }
