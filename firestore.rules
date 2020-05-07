@@ -18,6 +18,10 @@ service cloud.firestore {
 			allow create: if request.auth.uid == request.resource.data.owner; 
 			allow update, delete: if request.auth.uid == resource.data.owner; 
 			allow read: if true;
+			match /todoitems/{itemId} {
+  			allow write: if request.auth.uid == request.resource.data.owner; 
+				allow read: if true;
+			}
 		}
     match /{document=**} {
       allow read, write: if false;

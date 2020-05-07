@@ -2,6 +2,10 @@
   <section class="section">
     <div class="container" v-if="todolist">
       <h1 class="title">{{ todolist.title }}</h1>
+      <div v-if="hasUser">
+        <b-input v-model="newItem" maxlength="200"></b-input>
+        <b-button type="is-primary" @click="handlePost">Post</b-button>
+      </div>
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -23,6 +27,7 @@ import SourceLink from "@/components/SourceLink.vue";
   }
 })
 export default class Chatroom extends Vue {
+  newItem = "";
   todolist: TodoList | null = null;
   detacher?: firebase.Unsubscribe;
 
@@ -49,17 +54,16 @@ export default class Chatroom extends Vue {
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
-  /*
+
   async handlePost() {
-    await this.refChatroom.collection("messages").add({
+    await this.refTodoList.collection("todoitems").add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      message: this.newMessage
+      message: this.newItem
     });
-    this.newMessage = "";
-	}
-	*/
+    this.newItem = "";
+  }
 }
 </script>
 
