@@ -40,6 +40,14 @@ const routes: Array<RouteConfig> = [
 		path: '/blog/:articleId',
 		component: () => import('../views/BlogArticle.vue')
 	},
+	{
+		path: '/todo',
+		component: () => import('../views/Todo.vue')
+	},
+	{
+		path: '/todo/:listId',
+		component: () => import('../views/TodoList.vue')
+	},
 ]
 
 const router = new VueRouter({
