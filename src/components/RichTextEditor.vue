@@ -3,20 +3,8 @@
     <div>
       <editor-menu-bar v-if="!readonly" :editor="editor" v-slot="{ commands, isActive }">
         <div style="margin-bottom:1px">
-          <b-button
-            size="is-small"
-            @click="commands.undo"
-            type="is-light"
-            :disabled="commands.undoDepth() === 0"
-            icon-left="fas fa-undo"
-          />
-          <b-button
-            size="is-small"
-            @click="commands.redo"
-            type="is-light"
-            :disabled="commands.redoDepth() === 0"
-            icon-left="fas fa-redo"
-          />
+          <b-button size="is-small" @click="commands.undo" type="is-light" icon-left="fas fa-undo" />
+          <b-button size="is-small" @click="commands.redo" type="is-light" icon-left="fas fa-redo" />
           <b-button
             size="is-small"
             @click="commands.bold"
