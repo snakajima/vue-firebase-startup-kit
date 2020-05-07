@@ -35,6 +35,21 @@
             :type="isActive.ordered_list() ? 'is-dark':'is-light'"
             icon-left="fas fa-list-ol"
           />
+          <b-button
+            size="is-small"
+            @click="commands.heading({level:1})"
+            :type="isActive.heading({level:1}) ? 'is-dark':'is-light'"
+          >H1</b-button>
+          <b-button
+            size="is-small"
+            @click="commands.heading({level:2})"
+            :type="isActive.heading({level:2}) ? 'is-dark':'is-light'"
+          >H2</b-button>
+          <b-button
+            size="is-small"
+            @click="commands.heading({level:3})"
+            :type="isActive.heading({level:3}) ? 'is-dark':'is-light'"
+          >H3</b-button>
         </div>
       </editor-menu-bar>
       <div :class="readonly ? 'readonly-frame' : 'editor-frame'">
@@ -136,6 +151,9 @@ export default {
 </script>
 
 <style>
+h1 {
+  margin-bottom: 0.8rem;
+}
 .ProseMirror:focus {
   outline: none;
 }
@@ -148,7 +166,6 @@ export default {
   margin-bottom: 0.5rem;
 }
 .readonly-frame {
-  padding: 0.5rem;
 }
 
 .editor-box p {
@@ -158,5 +175,20 @@ export default {
 }
 .editor-box ul {
   list-style-type: disc;
+}
+.editor-box h1 {
+  font-weight: bold;
+  font-size: 1.6em;
+  margin-bottom: 0.6rem;
+}
+.editor-box h2 {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin-bottom: 0.4rem;
+}
+.editor-box h3 {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 0.2rem;
 }
 </style>
