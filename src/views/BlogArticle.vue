@@ -1,12 +1,17 @@
 <template>
   <section class="section">
     <div class="container" v-if="article">
-      <h1 v-if="isOwner && !editMode" class="title">
-        {{ article.title }}
-        <b-button @click="handleEdit">Edit</b-button>
-      </h1>
-      <div v-else style="margin-bottom: 0.5rem">
-        <b-input v-model="title" @input="handleChange" />
+      <div v-if="isOwner">
+        <h1 v-if="!editMode" class="title">
+          {{ article.title }}
+          <b-button @click="handleEdit">Edit</b-button>
+        </h1>
+        <div v-else style="margin-bottom: 0.5rem">
+          <b-input v-model="title" @input="handleChange" />
+        </div>
+      </div>
+      <div v-else>
+        <h1 class="title">{{ article.title }}</h1>
       </div>
       <div v-if="isOwner && editMode">
         <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
