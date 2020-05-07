@@ -15,15 +15,23 @@
       </div>
       <div v-if="isOwner && editMode">
         <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />
-        <div>
-          <b-button
-            @click="handleSave"
-            :disabled="!isChanged"
-            type="is-primary"
-            icon-left="fas fa-save"
-          >Save</b-button>
-          <b-button @click="handleCancel" icon-left="fas fa-window-close">Cancel</b-button>
-          <b-button @click="handleDelete" type="is-danger" icon-left="fas fa-trash">Delete</b-button>
+        <div class="level is-mobile">
+          <div class="level-left">
+            <b-button
+              @click="handleSave"
+              :disabled="!isChanged"
+              type="is-primary"
+              icon-left="fas fa-save"
+            >Save</b-button>
+            <b-button
+              @click="handleCancel"
+              icon-left="fas fa-window-close"
+              style="margin-left:1rem"
+            >Cancel</b-button>
+          </div>
+          <div class="level-right">
+            <b-button @click="handleDelete" type="is-danger" icon-left="fas fa-trash">Delete</b-button>
+          </div>
         </div>
       </div>
       <div v-else>
