@@ -12,6 +12,7 @@
           @click="handleCheck(item.id)"
         />
         {{ item.title }}
+        <i class="fas fa-trash" @click="handleDelete(item.id)" />
       </div>
       <source-link path="views/Chatroom.vue" />
     </div>
@@ -77,14 +78,17 @@ export default class Chatroom extends Vue {
     });
     this.newItem = "";
   }
+  refTodoItem(id: string): firebase.firestore.DocumentReference {
+    return this.refTodoList.collection("todoitems").doc(id);
+  }
   async handleCheck(id: string) {
     const item = this.itemMap[id] as TodoItem;
-    await this.refTodoList
-      .collection("todoitems")
-      .doc(id)
-      .update({
-        completed: !item.completed
-      });
+    await this.refTodoItem(id).update({
+      completed: !item.completed
+    });
+  }
+  async handleDelete(id: string) {
+    await this.refTodoItem(id).delete();
   }
 }
 </script>
