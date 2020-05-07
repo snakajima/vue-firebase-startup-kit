@@ -12,7 +12,11 @@
           @click="handleCheck(item.id)"
         />
         {{ item.title }}
-        <i class="fas fa-trash" @click="handleDelete(item.id)" />
+        <i
+          v-if="isOwner(item.id)"
+          class="fas fa-trash"
+          @click="handleDelete(item.id)"
+        />
       </div>
       <source-link path="views/Chatroom.vue" />
     </div>
@@ -83,12 +87,19 @@ export default class Chatroom extends Vue {
   }
   async handleCheck(id: string) {
     const item = this.itemMap[id] as TodoItem;
-    await this.refTodoItem(id).update({
-      completed: !item.completed
-    });
+    if (this.isOwner(id)) {
+      await this.refTodoItem(id).update({
+        completed: !item.completed
+      });
+    }
   }
   async handleDelete(id: string) {
     await this.refTodoItem(id).delete();
+  }
+  isOwner(id: string): boolean {
+    const user = this.$store.state.user;
+    const item = this.itemMap[id] as TodoItem;
+    return user && user.uid == item.owner;
   }
 }
 </script>
