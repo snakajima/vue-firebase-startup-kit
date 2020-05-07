@@ -1,8 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
-      <h1 class="title">Chat</h1>
-      <b-field label="New Chat Channel">
+      <h1 class="title">Todo</h1>
+      <b-field label="New Todo List">
         <b-input v-model="title"></b-input>
       </b-field>
       <b-button @click="handleCreate">Create</b-button>
@@ -10,8 +10,8 @@
     <hr />
     <h2>Your Channels</h2>
     <ul>
-      <li v-for="room in chatrooms" :key="room.id">
-        <router-link :to="`/chat/${room.id}`">{{room.title}}</router-link>
+      <li v-for="todolist in todolists" :key="todolist.id">
+        <router-link :to="`/chat/${todolist.id}`">{{todolist.title}}</router-link>
       </li>
     </ul>
   </section>
@@ -22,21 +22,21 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
-import { ChatRoom } from "@/scripts/datatypes";
+import { TodoList } from "@/scripts/datatypes";
 
 @Component
-export default class Chat extends Vue {
+export default class ToDo extends Vue {
   title = "";
   detacher?: Unsubscribe;
-  refChatrooms = db.collection(`chatrooms`);
-  chatrooms: Array<ChatRoom> = [];
+  refTodoLists = db.collection(`todolists`);
+  todolists: Array<TodoList> = [];
 
   created() {
-    this.detacher = this.refChatrooms
+    this.detacher = this.refTodoLists
       .orderBy("timeCreated", "desc")
       .onSnapshot(snapshot => {
-        this.chatrooms = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id }) as ChatRoom;
+        this.todolists = snapshot.docs.map(doc => {
+          return Object.assign(doc.data(), { id: doc.id }) as TodoList;
         });
       });
   }
@@ -45,14 +45,14 @@ export default class Chat extends Vue {
   }
 
   async handleCreate() {
-    const doc = await this.refChatrooms.add({
+    const doc = await this.refTodoLists.add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
       title: this.title
     });
     console.log("doc", doc);
-    this.$router.push(`/chat/${doc.id}`);
+    this.$router.push(`/todo/${doc.id}`);
   }
 }
 </script>
