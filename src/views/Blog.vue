@@ -6,7 +6,7 @@
     </div>
     <hr />
     <h2>Your Blog Articles</h2>
-    <list-view :refCollection="refArticles" />
+    <list-view :refCollection="refArticles" path="blog" />
     <source-link path="views/Blog.vue" />
   </section>
 </template>
