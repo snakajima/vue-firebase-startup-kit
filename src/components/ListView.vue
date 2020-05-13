@@ -20,6 +20,7 @@ export default class ListView extends Vue {
   created() {
     this.detacher = this.refCollection
       .orderBy("timeCreated", "desc")
+      .where("owner", "==", this.$store.state.user.uid)
       .onSnapshot(snapshot => {
         this.articles = snapshot.docs.map(doc => {
           return Object.assign(doc.data(), { id: doc.id });
