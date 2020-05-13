@@ -28,7 +28,7 @@ export default class Blog extends Vue {
   refCollection = db.collection(`chatrooms`);
 
   handleCreated(id: string) {
-    this.$router.push(`/chat/${id}?edit=1`);
+    this.$router.push(`/chat/${id}`);
   }
 }
 </script>

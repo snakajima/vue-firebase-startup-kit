@@ -1,58 +1,34 @@
 <template>
   <section class="section">
-    <div class="container">
-      <h1 class="title">Todo</h1>
-      <b-field label="New Todo List">
-        <b-input v-model="title"></b-input>
-      </b-field>
-      <b-button @click="handleCreate">Create</b-button>
-    </div>
+    <h1 class="title">Todo</h1>
+    <create-new :refCollection="refCollection" @created="handleCreated" />
     <hr />
-    <h2>Your Channels</h2>
-    <ul>
-      <li v-for="todolist in todolists" :key="todolist.id">
-        <router-link :to="`/chat/${todolist.id}`">{{todolist.title}}</router-link>
-      </li>
-    </ul>
+    <h2>Your Todo Lists</h2>
+    <list-view :refCollection="refCollection" path="todo" />
+    <source-link path="views/Chat.vue" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import { db, firestore } from "@/scripts/firebase";
-import { Unsubscribe } from "firebase";
-import { TodoList } from "@/scripts/datatypes";
+import { db } from "@/scripts/firebase";
+import CreateNew from "@/components/CreateNew.vue";
+import ListView from "@/components/ListView.vue";
+import SourceLink from "@/components/SourceLink.vue";
 
-@Component
-export default class ToDo extends Vue {
-  title = "";
-  detacher?: Unsubscribe;
-  refTodoLists = db.collection(`todolists`);
-  todolists: Array<TodoList> = [];
-
-  created() {
-    this.detacher = this.refTodoLists
-      .orderBy("timeCreated", "desc")
-      .onSnapshot(snapshot => {
-        this.todolists = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id }) as TodoList;
-        });
-      });
+@Component({
+  components: {
+    SourceLink,
+    CreateNew,
+    ListView
   }
-  destroyed() {
-    this.detacher && this.detacher();
-  }
+})
+export default class Blog extends Vue {
+  refCollection = db.collection(`todolists`);
 
-  async handleCreate() {
-    const doc = await this.refTodoLists.add({
-      owner: this.$store.state.user.uid,
-      ownerName: this.$store.state.user.displayName,
-      timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: this.title
-    });
-    console.log("doc", doc);
-    this.$router.push(`/todo/${doc.id}`);
+  handleCreated(id: string) {
+    this.$router.push(`/todo/${id}`);
   }
 }
 </script>
