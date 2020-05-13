@@ -14,6 +14,9 @@
           <li>
             <router-link to="/blog">Blog</router-link>
           </li>
+          <li>
+            <router-link to="/todo">Todo</router-link>
+          </li>
         </ul>
       </div>
       <div v-else>

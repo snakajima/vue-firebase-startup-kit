@@ -1,11 +1,11 @@
 <template>
   <section class="section">
-    <h1 class="title">Chat</h1>
+    <h1 class="title">Todo</h1>
     <create-new :refCollection="refCollection" @created="handleCreated" />
     <hr />
-    <h2>Your Chat Channels</h2>
-    <list-view :refCollection="refCollection" path="chat" />
-    <source-link path="views/Chat.vue" />
+    <h2>Your Todo Lists</h2>
+    <list-view :refCollection="refCollection" path="todo" />
+    <source-link path="views/Todo.vue" />
   </section>
 </template>
 
@@ -25,10 +25,10 @@ import SourceLink from "@/components/SourceLink.vue";
   }
 })
 export default class Blog extends Vue {
-  refCollection = db.collection(`chatrooms`);
+  refCollection = db.collection(`todolists`);
 
   handleCreated(id: string) {
-    this.$router.push(`/chat/${id}`);
+    this.$router.push(`/todo/${id}`);
   }
 }
 </script>

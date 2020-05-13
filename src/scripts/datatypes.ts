@@ -23,3 +23,19 @@ export interface BlogArticle {
 	content: any;
 }
 
+export interface TodoList {
+	id: string;
+	owner: string;
+	ownerName: string;
+	title: string;
+	timeCreated: firebase.firestore.Timestamp;
+}
+
+export interface TodoItem {
+	id: string;
+	ownerName: string;
+	owner: string;
+	title: string;
+	timeCreated: firebase.firestore.Timestamp;
+	completed: boolean;
+}
