@@ -23,14 +23,20 @@
         <p>Please Sign-in to see various features!</p>
       </div>
     </div>
+    <source-link path="views/Home.vue" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import SourceLink from "@/components/SourceLink.vue";
 
-@Component
+@Component({
+  components: {
+    SourceLink
+  }
+})
 export default class Home extends Vue {
   get userName(): string {
     if (this.$store.state.user) {
