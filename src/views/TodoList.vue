@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container" v-if="todolist">
-      <h1 class="title">{{ todolist.title }}</h1>
+      <editable-title :document="todolist" :refDocument="refTodoList" />
       <div v-if="hasUser">
         <b-input v-model="newItem" maxlength="200"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
@@ -31,11 +31,13 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { TodoList, TodoItem } from "@/scripts/datatypes";
+import EditableTitle from "@/components/EditableTitle.vue";
 import SourceLink from "@/components/SourceLink.vue";
 
 @Component({
   components: {
-    SourceLink
+    SourceLink,
+    EditableTitle
   }
 })
 export default class Chatroom extends Vue {
