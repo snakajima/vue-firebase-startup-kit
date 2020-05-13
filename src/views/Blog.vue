@@ -7,11 +7,6 @@
     <hr />
     <h2>Your Blog Articles</h2>
     <list-view :refCollection="refArticles" />
-    <ul>
-      <li v-for="article in articles" :key="article.id">
-        <router-link :to="`/blog/${article.id}`">{{article.title}}</router-link>
-      </li>
-    </ul>
     <source-link path="views/Blog.vue" />
   </section>
 </template>
@@ -34,23 +29,7 @@ import SourceLink from "@/components/SourceLink.vue";
   }
 })
 export default class Blog extends Vue {
-  title = "";
-  detacher?: Unsubscribe;
   refArticles = db.collection(`articles`);
-  articles: Array<BlogArticle> = [];
-
-  created() {
-    this.detacher = this.refArticles
-      .orderBy("timeCreated", "desc")
-      .onSnapshot(snapshot => {
-        this.articles = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id }) as BlogArticle;
-        });
-      });
-  }
-  destroyed() {
-    this.detacher && this.detacher();
-  }
 
   handleCreated(id: string) {
     this.$router.push(`/blog/${id}?edit=1`);
