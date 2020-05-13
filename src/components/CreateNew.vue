@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-field label="New Something">
+    <b-field label="Create New">
       <b-input v-model="title"></b-input>
     </b-field>
     <b-button @click="handleCreate">Create</b-button>

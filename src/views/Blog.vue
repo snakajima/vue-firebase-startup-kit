@@ -3,10 +3,6 @@
     <div class="container">
       <h1 class="title">Blog</h1>
       <create-new :refCollection="refArticles" @created="handleCreated" />
-      <b-field label="New Blog Article">
-        <b-input v-model="title"></b-input>
-      </b-field>
-      <b-button @click="handleCreate">Create</b-button>
     </div>
     <hr />
     <h2>Your Blog Articles</h2>
@@ -53,16 +49,6 @@ export default class Blog extends Vue {
     this.detacher && this.detacher();
   }
 
-  async handleCreate() {
-    const doc = await this.refArticles.add({
-      owner: this.$store.state.user.uid,
-      ownerName: this.$store.state.user.displayName,
-      timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: this.title
-    });
-    console.log("doc", doc);
-    this.$router.push(`/blog/${doc.id}?edit=1`);
-  }
   handleCreated(id: string) {
     this.$router.push(`/blog/${id}?edit=1`);
   }
