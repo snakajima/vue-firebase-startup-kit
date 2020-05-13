@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="listview">
     <li v-for="article in articles" :key="article.id">
       <router-link :to="`/${path}/${article.id}`">{{article.title}}</router-link>
     </li>
@@ -31,4 +31,10 @@ export default class ListView extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.listview {
+  margin-top: 8px;
+}
+</style>
 

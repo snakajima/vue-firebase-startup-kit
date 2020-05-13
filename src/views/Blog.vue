@@ -1,9 +1,7 @@
 <template>
   <section class="section">
-    <div class="container">
-      <h1 class="title">Blog</h1>
-      <create-new :refCollection="refArticles" @created="handleCreated" />
-    </div>
+    <h1 class="title">Blog</h1>
+    <create-new :refCollection="refArticles" @created="handleCreated" />
     <hr />
     <h2>Your Blog Articles</h2>
     <list-view :refCollection="refArticles" path="blog" />

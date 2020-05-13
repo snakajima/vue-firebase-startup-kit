@@ -3,7 +3,7 @@
     <b-field label="Create New">
       <b-input v-model="title"></b-input>
     </b-field>
-    <b-button @click="handleCreate">Create</b-button>
+    <b-button type="is-primary" @click="handleCreate">Create</b-button>
   </div>
 </template>
 
