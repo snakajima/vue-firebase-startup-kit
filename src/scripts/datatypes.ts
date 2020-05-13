@@ -1,4 +1,4 @@
-export interface ChatRoom {
+export interface BaseDocument {
 	id: string;
 	owner: string;
 	ownerName: string;
@@ -6,36 +6,20 @@ export interface ChatRoom {
 	timeCreated: firebase.firestore.Timestamp;
 }
 
-export interface Message {
-	id: string;
-	ownerName: string;
-	owner: string;
+export interface ChatRoom extends BaseDocument {
+}
+
+export interface Message extends BaseDocument {
 	message: string;
-	timeCreated: firebase.firestore.Timestamp;
 }
 
-export interface BlogArticle {
-	id: string;
-	owner: string;
-	ownerName: string;
-	title: string;
-	timeCreated: firebase.firestore.Timestamp;
+export interface BlogArticle extends BaseDocument {
 	content: any;
 }
 
-export interface TodoList {
-	id: string;
-	owner: string;
-	ownerName: string;
-	title: string;
-	timeCreated: firebase.firestore.Timestamp;
+export interface TodoList extends BaseDocument {
 }
 
-export interface TodoItem {
-	id: string;
-	ownerName: string;
-	owner: string;
-	title: string;
-	timeCreated: firebase.firestore.Timestamp;
+export interface TodoItem extends BaseDocument {
 	completed: boolean;
 }

@@ -9,13 +9,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import { BaseDocument } from "../scripts/datatypes";
 
 @Component
 export default class ListView extends Vue {
   @Prop() readonly refCollection!: firebase.firestore.CollectionReference;
   @Prop() readonly path!: string;
   detacher?: firebase.Unsubscribe;
-  articles: Array<any> = [];
+  articles: Array<BaseDocument> = [];
 
   created() {
     this.detacher = this.refCollection
@@ -23,7 +24,7 @@ export default class ListView extends Vue {
       .where("owner", "==", this.$store.state.user.uid)
       .onSnapshot(snapshot => {
         this.articles = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id });
+          return Object.assign(doc.data(), { id: doc.id }) as BaseDocument;
         });
       });
   }
