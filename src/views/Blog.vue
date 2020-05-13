@@ -6,6 +6,7 @@
     </div>
     <hr />
     <h2>Your Blog Articles</h2>
+    <list-view :refCollection="refArticles" />
     <ul>
       <li v-for="article in articles" :key="article.id">
         <router-link :to="`/blog/${article.id}`">{{article.title}}</router-link>
@@ -22,12 +23,14 @@ import { db, firestore } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
 import { BlogArticle } from "@/scripts/datatypes";
 import CreateNew from "@/components/CreateNew.vue";
+import ListView from "@/components/ListView.vue";
 import SourceLink from "@/components/SourceLink.vue";
 
 @Component({
   components: {
     SourceLink,
-    CreateNew
+    CreateNew,
+    ListView
   }
 })
 export default class Blog extends Vue {
