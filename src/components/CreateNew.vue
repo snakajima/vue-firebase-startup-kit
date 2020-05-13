@@ -15,11 +15,10 @@ import { db, firestore } from "@/scripts/firebase";
 @Component
 export default class CreateNew extends Vue {
   title = "";
-  refArticles = db.collection(`articles`);
-  @Prop() readonly path!: string;
+  @Prop() readonly refCollection!: firebase.firestore.CollectionReference;
 
   async handleCreate() {
-    const doc = await this.refArticles.add({
+    const doc = await this.refCollection.add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),

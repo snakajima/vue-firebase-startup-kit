@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Blog</h1>
-      <create-new />
+      <create-new :refCollection="refArticles" />
       <b-field label="New Blog Article">
         <b-input v-model="title"></b-input>
       </b-field>
