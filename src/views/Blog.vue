@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Blog</h1>
-      <create-new :refCollection="refArticles" />
+      <create-new :refCollection="refArticles" @created="handleCreated" />
       <b-field label="New Blog Article">
         <b-input v-model="title"></b-input>
       </b-field>
@@ -62,6 +62,9 @@ export default class Blog extends Vue {
     });
     console.log("doc", doc);
     this.$router.push(`/blog/${doc.id}?edit=1`);
+  }
+  handleCreated(id: string) {
+    this.$router.push(`/blog/${id}?edit=1`);
   }
 }
 </script>

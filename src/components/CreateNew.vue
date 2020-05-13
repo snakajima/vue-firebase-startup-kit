@@ -24,8 +24,7 @@ export default class CreateNew extends Vue {
       timeCreated: firestore.FieldValue.serverTimestamp(),
       title: this.title
     });
-    console.log("doc", doc);
-    this.$router.push(`/blog/${doc.id}?edit=1`);
+    this.$emit("created", doc.id);
   }
 }
 </script>
