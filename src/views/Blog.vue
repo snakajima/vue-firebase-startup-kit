@@ -2,6 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Blog</h1>
+      <create-new />
       <b-field label="New Blog Article">
         <b-input v-model="title"></b-input>
       </b-field>
@@ -24,11 +25,13 @@ import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { Unsubscribe } from "firebase";
 import { BlogArticle } from "@/scripts/datatypes";
+import CreateNew from "@/components/CreateNew.vue";
 import SourceLink from "@/components/SourceLink.vue";
 
 @Component({
   components: {
-    SourceLink
+    SourceLink,
+    CreateNew
   }
 })
 export default class Blog extends Vue {
