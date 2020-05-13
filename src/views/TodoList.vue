@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container" v-if="todolist">
-      <editable-title :document="todolist" :refDocument="refTodoList" />
+      <editable-title :document="todolist" :refDocument="refTodoList" @deleted="handleListDelete" />
       <div v-if="hasUser">
         <b-input v-model="newItem" maxlength="200"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
@@ -102,6 +102,9 @@ export default class Chatroom extends Vue {
     const user = this.$store.state.user;
     const item = this.itemMap[id] as TodoItem;
     return user && user.uid == item.owner;
+  }
+  handleListDelete() {
+    this.$router.push("/todo");
   }
 }
 </script>

@@ -67,8 +67,10 @@ export default class EditableTitle extends Vue {
     this.title = this.document.title;
     this.editMode = false;
   }
-  handleDelete() {
+  async handleDelete() {
     console.log("handleDelete");
+    await this.refDocument.delete();
+    this.$emit("deleted");
   }
 }
 </script>
