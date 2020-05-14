@@ -2,7 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 		match /chatrooms/{chatId} {
-			allow write: if request.auth.uid == request.resource.data.owner; 
+			allow create: if request.auth.uid == request.resource.data.owner; 
+			allow update, delete: if request.auth.uid == resource.data.owner; 
 			allow read: if true;
 			match /messages/{messageId} {
   			allow write: if request.auth.uid == request.resource.data.owner; 

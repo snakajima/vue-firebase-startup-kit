@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container" v-if="chatroom">
-      <h1 class="h1">#{{ chatroom.title }}</h1>
+      <editable-title :document="chatroom" :refDocument="refChatroom" @deleted="handleRoomDelete" />
       <div v-for="message in messages" :key="message.id" class="chatFrame">
         <div>
           <span class="chatName">{{message.ownerName}}</span>
@@ -33,11 +33,13 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { db, firestore } from "@/scripts/firebase";
 import { ChatRoom, Message } from "@/scripts/datatypes";
+import EditableTitle from "@/components/EditableTitle.vue";
 import SourceLink from "@/components/SourceLink.vue";
 
 @Component({
   components: {
-    SourceLink
+    SourceLink,
+    EditableTitle
   }
 })
 export default class Chatroom extends Vue {
@@ -79,6 +81,9 @@ export default class Chatroom extends Vue {
       message: this.newMessage
     });
     this.newMessage = "";
+  }
+  handleRoomDelete() {
+    this.$router.push("/chat");
   }
 }
 </script>
