@@ -1,9 +1,9 @@
 <template>
   <section class="section">
-    <h1 class="title">Chat</h1>
+    <h1 class="h1">Chat</h1>
     <create-new :refCollection="refCollection" @created="handleCreated" />
     <hr />
-    <h2>Your Chat Channels</h2>
+    <h2 class="h2">Your Chat Channels</h2>
     <list-view :refCollection="refCollection" path="chat" />
     <source-link path="views/Chat.vue" />
   </section>

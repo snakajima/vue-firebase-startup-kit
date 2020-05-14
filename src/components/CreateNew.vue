@@ -1,8 +1,7 @@
 <template>
   <div>
-    <b-field label="Create New">
-      <b-input v-model="title"></b-input>
-    </b-field>
+    <h2 class="h2">Create New</h2>
+    <b-input v-model="title" class="m-b-4"></b-input>
     <b-button type="is-primary" @click="handleCreate">Create</b-button>
   </div>
 </template>

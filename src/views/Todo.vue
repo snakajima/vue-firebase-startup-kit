@@ -1,9 +1,9 @@
 <template>
   <section class="section">
-    <h1 class="title">Todo</h1>
+    <h1 class="h1">Todo</h1>
     <create-new :refCollection="refCollection" @created="handleCreated" />
     <hr />
-    <h2>Your Todo Lists</h2>
+    <h2 class="h2">Your Todo Lists</h2>
     <list-view :refCollection="refCollection" path="todo" />
     <source-link path="views/Todo.vue" />
   </section>

@@ -1,9 +1,9 @@
 <template>
   <section class="section">
-    <h1 class="title">Blog</h1>
+    <h1 class="h1">Blog</h1>
     <create-new :refCollection="refCollection" @created="handleCreated" />
     <hr />
-    <h2>Your Blog Articles</h2>
+    <h2 class="h2">Your Blog Articles</h2>
     <list-view :refCollection="refCollection" path="blog" />
     <source-link path="views/Blog.vue" />
   </section>

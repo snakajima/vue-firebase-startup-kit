@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <h1 v-else class="title">
+    <h1 v-else class="h1">
       {{ title }}
       <span v-if="isOwner">
         <b-button @click="handleEdit" icon-left="fas fa-edit">Edit</b-button>

@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container" v-if="article">
       <div v-if="isOwner">
-        <h1 v-if="!editMode" class="title">
+        <h1 v-if="!editMode" class="h1">
           {{ article.title }}
           <b-button @click="handleEdit" icon-left="fas fa-edit">Edit</b-button>
         </h1>
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div v-else>
-        <h1 class="title">{{ article.title }}</h1>
+        <h1 class="h1">{{ article.title }}</h1>
       </div>
       <div v-if="isOwner && editMode">
         <rich-text-editor @onUpdate="handleUpdate" :content="article.content" />

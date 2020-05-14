@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container" v-if="chatroom">
-      <h1 class="title">#{{ chatroom.title }}</h1>
+      <h1 class="h1">#{{ chatroom.title }}</h1>
       <div v-for="message in messages" :key="message.id" class="chatFrame">
         <div>
           <span class="chatName">{{message.ownerName}}</span>
@@ -13,7 +13,7 @@
         <div class="chatMessage">{{message.message}}</div>
       </div>
       <div v-if="hasUser">
-        <b-input v-model="newMessage" maxlength="200" type="textarea"></b-input>
+        <b-input v-model="newMessage" type="textarea" class="m-b-4"></b-input>
         <b-button type="is-primary" @click="handlePost">Post</b-button>
       </div>
       <div v-else class="notification">
