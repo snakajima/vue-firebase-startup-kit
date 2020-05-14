@@ -1,7 +1,7 @@
 <template>
-  <div class="editable-title">
+  <div class="m-b-16">
     <div v-if="editMode">
-      <div class="title-input">
+      <div class="m-b-4">
         <b-input v-model="title" />
       </div>
       <div class="level is-mobile">
@@ -76,12 +76,3 @@ export default class EditableTitle extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.editable-title {
-  margin-bottom: 16px;
-}
-.title-input {
-  margin-bottom: 8px;
-}
-</style>

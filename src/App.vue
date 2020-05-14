@@ -38,6 +38,7 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "@/assets/buefy.scss";
+@import "@/assets/playground.scss";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
