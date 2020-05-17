@@ -17,10 +17,6 @@ Vue.use(Buefy, { defaultIconPack: 'fas' })
 
 Vue.config.productionTip = false
 
-Vue.use(Buefy, {
-	defaultIconPack: 'fas',
-})
-
 new Vue({
 	router,
 	store,
