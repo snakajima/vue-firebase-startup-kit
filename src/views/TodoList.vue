@@ -4,7 +4,7 @@
       <editable-title :document="todolist" :refDocument="refTodoList" @deleted="handleListDelete" />
       <div v-if="hasUser" class="m-b-8">
         <b-input v-model="newItem" class="m-b-4"></b-input>
-        <b-button type="is-primary" @click="handlePost">Post</b-button>
+        <b-button type="is-primary" @click="handlePost">Add</b-button>
       </div>
       <div v-for="item in todoitems" :key="item.id">
         <i
