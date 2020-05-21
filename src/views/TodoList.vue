@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container" v-if="todolist">
       <editable-title :document="todolist" :refDocument="refTodoList" @deleted="handleListDelete" />
-      <form v-if="hasUser" class="m-b-8" @submit.prevent="handleAdd">
+      <form class="m-b-8" @submit.prevent="handleAdd">
         <b-input v-model="title" class="m-b-4" />
         <b-button type="submit" :disabled="!enableNew" @click="handleAdd" icon-left="plus" />
       </form>
@@ -72,9 +72,6 @@ export default class Chatroom extends Vue {
   get refCollection(): firebase.firestore.CollectionReference {
     return this.refTodoList.collection("todoitems");
   }
-  get hasUser(): boolean {
-    return !!this.$store.state.user;
-  }
   get enableNew(): boolean {
     return this.title.length > 0;
   }
@@ -118,19 +115,13 @@ export default class Chatroom extends Vue {
       this.title = "";
     }
   }
-  async handleCheck(item: TodoItem) {
-    if (this.isOwner(item)) {
-      await item.ref.update({
-        completed: !item.completed
-      });
-    }
+  handleCheck(item: TodoItem) {
+    item.ref.update({
+      completed: !item.completed
+    });
   }
-  async handleDetails(item: TodoItem) {
+  handleDetails(item: TodoItem) {
     this.details = { ...item } as TodoItem;
-  }
-  isOwner(item: TodoItem): boolean {
-    const user = this.$store.state.user;
-    return user && user.uid == item.owner;
   }
   handleListDelete() {
     this.$router.push("/todo");
