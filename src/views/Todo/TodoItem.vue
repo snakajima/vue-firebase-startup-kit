@@ -1,10 +1,10 @@
 <template>
   <b-modal :active.sync="isVisible" :width="488">
-    <div class="popup">
+    <form class="popup" @submit.prevent="handleSave">
       <b-input class="m-b-8" v-model="title" />
-      <b-button type="is-primary" :disabled="!modified" @click="handleSave" icon-left="save" />
+      <b-button type="submit" :disabled="!modified" @click="handleSave" icon-left="save" />
       <b-button class="m-l-8" type="is-danger" @click="handleDelete" icon-left="trash" />
-    </div>
+    </form>
   </b-modal>
 </template>
 
@@ -28,10 +28,12 @@ export default class TodoItemView extends Vue {
   }
 
   handleSave() {
-    this.item.ref.update({
-      title: this.title
-    });
-    this.isVisible = false;
+    if (this.modified) {
+      this.item.ref.update({
+        title: this.title
+      });
+      this.isVisible = false;
+    }
   }
   handleDelete() {
     this.item.ref.delete();
