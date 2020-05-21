@@ -12,11 +12,6 @@
           @click="handleCheck(item.id)"
         />
         {{ item.title }}
-        <i
-          v-if="isOwner(item.id)"
-          class="fas fa-trash"
-          @click="handleDelete(item.id)"
-        />
         <b-button @click="handleDetails(item)" size="is-small">
           <i class="fas fa-angle-right" />
         </b-button>
@@ -131,9 +126,6 @@ export default class Chatroom extends Vue {
         completed: !item.completed
       });
     }
-  }
-  async handleDelete(id: string) {
-    await this.refTodoItem(id).delete();
   }
   async handleDetails(item: TodoItem) {
     this.details = { ...item } as TodoItem;

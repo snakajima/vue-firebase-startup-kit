@@ -3,6 +3,7 @@
     <div class="popup">
       <b-input v-model="title" />
       <b-button @click="handleSave">Save</b-button>
+      <b-button @click="handleDelete">Delete</b-button>
     </div>
   </b-modal>
 </template>
@@ -20,16 +21,18 @@ export default class TodoItemView extends Vue {
   @Prop() private item: any;
   @Watch("item")
   onItemChange(newValue: any) {
-    console.log("item", newValue.title);
     this.isVisible = true;
     this.title = newValue.title;
   }
 
   handleSave() {
-    console.log("handleSave", this.item);
     this.item.ref.update({
       title: this.title
     });
+    this.isVisible = false;
+  }
+  handleDelete() {
+    this.item.ref.delete();
     this.isVisible = false;
   }
 }
