@@ -17,10 +17,14 @@
           class="fas fa-trash"
           @click="handleDelete(item.id)"
         />
+        <b-button @click="handleDetails(item.id)" size="is-small">
+          <i class="fas fa-angle-right" />
+        </b-button>
       </div>
       <div class="m-t-8">
         <b-button @click="handleArchive">Archive</b-button>
       </div>
+      <todo-item-view v-if="details" :itemId="details" />
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -36,17 +40,20 @@ import { db, firestore } from "@/scripts/firebase";
 import { TodoList, TodoItem } from "@/scripts/datatypes";
 import EditableTitle from "@/components/EditableTitle.vue";
 import SourceLink from "@/components/SourceLink.vue";
+import TodoItemView from "@/views/Todo/TodoItem.vue";
 
 @Component({
   components: {
     SourceLink,
-    EditableTitle
+    EditableTitle,
+    TodoItemView
   }
 })
 export default class Chatroom extends Vue {
   newItem = "";
   todolist: TodoList | null = null;
   todoitems: Array<TodoItem> = [];
+  details: string | null = null;
   detacher?: firebase.Unsubscribe;
 
   async created() {
@@ -124,6 +131,9 @@ export default class Chatroom extends Vue {
   }
   async handleDelete(id: string) {
     await this.refTodoItem(id).delete();
+  }
+  async handleDetails(id: string) {
+    this.details = id;
   }
   isOwner(id: string): boolean {
     const user = this.$store.state.user;
