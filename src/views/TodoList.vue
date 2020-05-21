@@ -9,7 +9,7 @@
       <div v-for="item in todoitems" :key="item.id">
         <i
           :class="{far:true, 'fa-square':!item.completed, 'fa-check-square':item.completed}"
-          @click="handleCheck(item.id)"
+          @click="handleCheck(item)"
         />
         {{ item.title }}
         <b-button @click="handleDetails(item)" size="is-small">
@@ -77,12 +77,6 @@ export default class Chatroom extends Vue {
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
-  get itemMap(): any {
-    return this.todoitems.reduce((ret: any, item) => {
-      ret[item.id] = item;
-      return ret;
-    }, {});
-  }
 
   async handleArchive() {
     const today = new Date();
@@ -116,13 +110,9 @@ export default class Chatroom extends Vue {
     });
     this.newItem = "";
   }
-  refTodoItem(id: string): firebase.firestore.DocumentReference {
-    return this.refTodoList.collection("todoitems").doc(id);
-  }
-  async handleCheck(id: string) {
-    const item = this.itemMap[id] as TodoItem;
-    if (this.isOwner(id)) {
-      await this.refTodoItem(id).update({
+  async handleCheck(item: TodoItem) {
+    if (this.isOwner(item)) {
+      await item.ref.update({
         completed: !item.completed
       });
     }
@@ -130,9 +120,8 @@ export default class Chatroom extends Vue {
   async handleDetails(item: TodoItem) {
     this.details = { ...item } as TodoItem;
   }
-  isOwner(id: string): boolean {
+  isOwner(item: TodoItem): boolean {
     const user = this.$store.state.user;
-    const item = this.itemMap[id] as TodoItem;
     return user && user.uid == item.owner;
   }
   handleListDelete() {
