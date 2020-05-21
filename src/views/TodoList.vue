@@ -2,10 +2,10 @@
   <section class="section">
     <div class="container" v-if="todolist">
       <editable-title :document="todolist" :refDocument="refTodoList" @deleted="handleListDelete" />
-      <div v-if="hasUser" class="m-b-8">
-        <b-input v-model="newItem" class="m-b-4"></b-input>
-        <b-button type="is-primary" @click="handlePost" icon-left="plus" />
-      </div>
+      <form v-if="hasUser" class="m-b-8" @submit.prevent="handleAdd">
+        <b-input v-model="title" class="m-b-4" />
+        <b-button type="submit" :disabled="!enableNew" @click="handleAdd" icon-left="plus" />
+      </form>
       <div v-for="item in todoitems" :key="item.id">
         <i
           :class="{far:true, 'fa-square':!item.completed, 'fa-check-square':item.completed}"
@@ -45,7 +45,7 @@ import TodoItemView from "@/views/Todo/TodoItem.vue";
   }
 })
 export default class Chatroom extends Vue {
-  newItem = "";
+  title = "";
   todolist: TodoList | null = null;
   todoitems: Array<TodoItem> = [];
   details: TodoItem | any = {};
@@ -77,6 +77,9 @@ export default class Chatroom extends Vue {
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
+  get enableNew(): boolean {
+    return this.title.length > 0;
+  }
 
   async handleArchive() {
     const today = new Date();
@@ -100,15 +103,17 @@ export default class Chatroom extends Vue {
       });
     });
   }
-  async handlePost() {
-    await this.refTodoList.collection("todoitems").add({
-      owner: this.$store.state.user.uid,
-      ownerName: this.$store.state.user.displayName,
-      timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: this.newItem,
-      completed: false
-    });
-    this.newItem = "";
+  async handleAdd() {
+    if (this.enableNew) {
+      await this.refTodoList.collection("todoitems").add({
+        owner: this.$store.state.user.uid,
+        ownerName: this.$store.state.user.displayName,
+        timeCreated: firestore.FieldValue.serverTimestamp(),
+        title: this.title,
+        completed: false
+      });
+      this.title = "";
+    }
   }
   async handleCheck(item: TodoItem) {
     if (this.isOwner(item)) {
