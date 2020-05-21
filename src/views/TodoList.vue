@@ -24,7 +24,7 @@
       <div class="m-t-8">
         <b-button @click="handleArchive">Archive</b-button>
       </div>
-      <todo-item-view v-if="details" :item.sync="details" />
+      <todo-item-view :item="details" />
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -53,7 +53,7 @@ export default class Chatroom extends Vue {
   newItem = "";
   todolist: TodoList | null = null;
   todoitems: Array<TodoItem> = [];
-  details: TodoItem | null = null;
+  details: TodoItem | any = {};
   detacher?: firebase.Unsubscribe;
 
   async created() {
@@ -61,7 +61,10 @@ export default class Chatroom extends Vue {
       .orderBy("timeCreated")
       .onSnapshot(snapshot => {
         this.todoitems = snapshot.docs.map(doc => {
-          return Object.assign(doc.data(), { id: doc.id }) as TodoItem;
+          return Object.assign(doc.data(), {
+            id: doc.id,
+            ref: doc.ref
+          }) as TodoItem;
         });
       });
     this.todolist = (await this.refTodoList.get()).data() as TodoList;

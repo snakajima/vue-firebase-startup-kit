@@ -1,5 +1,6 @@
 export interface BaseDocument {
 	id: string;
+	ref: firebase.firestore.DocumentReference;
 	owner: string;
 	ownerName: string;
 	title: string;

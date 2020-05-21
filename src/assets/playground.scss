@@ -10,6 +10,18 @@
 .m-b-16 {
 	margin-bottom: 16px;
 }
+.p-t-8 {
+	padding-top: 8px;
+}
+.p-b-4 {
+	padding-bottom: 4px;
+}
+.p-b-8 {
+	padding-bottom: 8px;
+}
+.p-b-16 {
+	padding-bottom: 16px;
+}
 .h1 {
 	font-size: 1.8em;
 	font-weight: bold;
@@ -19,4 +31,11 @@
 	font-size: 1.2em;
 	font-weight: bold;
 	margin-bottom: 8px;
+}
+
+.popup {
+	background: white;
+	border-radius: 4px;
+	padding: 8px;
+	margin: 8px;
 }
