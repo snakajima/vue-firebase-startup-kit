@@ -10,17 +10,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { isPrimitive } from "vue-class-component/lib/util";
-import { db, firestore } from "@/scripts/firebase";
+import { TodoItem } from "@/scripts/datatypes";
 
 @Component
 export default class TodoItemView extends Vue {
   isVisible = false;
   title = "";
 
-  @Prop() private item: any;
+  @Prop() private item!: TodoItem;
   @Watch("item")
-  onItemChange(newValue: any) {
+  onItemChange(newValue: TodoItem) {
     this.isVisible = true;
     this.title = newValue.title;
   }
