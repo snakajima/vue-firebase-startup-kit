@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <form class="m-b-8" @submit.prevent="handleCreate">
     <h2 class="h2">Create New</h2>
     <b-input v-model="title" class="m-b-4"></b-input>
-    <b-button type="is-primary" @click="handleCreate">Create</b-button>
-  </div>
+    <b-button type="submit" @click="handleCreate" icon-left="plus" />
+  </form>
 </template>
 
 <script lang="ts">
@@ -23,6 +23,7 @@ export default class CreateNew extends Vue {
       timeCreated: firestore.FieldValue.serverTimestamp(),
       title: this.title
     });
+    this.title = "";
     this.$emit("created", doc.id);
   }
 }

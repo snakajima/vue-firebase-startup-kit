@@ -2,10 +2,7 @@
   <section class="section">
     <div class="container" v-if="todolist">
       <editable-title :document="todolist" :refDocument="refTodoList" @deleted="handleListDelete" />
-      <form class="m-b-8" @submit.prevent="handleAdd">
-        <b-input v-model="title" class="m-b-4" />
-        <b-button type="submit" :disabled="!enableNew" @click="handleAdd" icon-left="plus" />
-      </form>
+      <create-new :refCollection="refCollection" />
       <div v-for="item in todoitems" :key="item.id">
         <i :class="iconClass(item)" @click="handleCheck(item)" />
         {{ item.title }}
@@ -30,17 +27,19 @@ import { db, firestore } from "@/scripts/firebase";
 import { TodoList, TodoItem } from "@/scripts/datatypes";
 import EditableTitle from "@/components/EditableTitle.vue";
 import SourceLink from "@/components/SourceLink.vue";
+import CreateNew from "@/components/CreateNew.vue";
+
 import TodoItemView from "@/views/Todo/TodoItem.vue";
 
 @Component({
   components: {
     SourceLink,
     EditableTitle,
+    CreateNew,
     TodoItemView
   }
 })
 export default class Chatroom extends Vue {
-  title = "";
   todolist: TodoList | null = null;
   todoitems: Array<TodoItem> = [];
   details: TodoItem | any = {};
@@ -68,9 +67,6 @@ export default class Chatroom extends Vue {
   }
   get refCollection(): firebase.firestore.CollectionReference {
     return this.refTodoList.collection("todoitems");
-  }
-  get enableNew(): boolean {
-    return this.title.length > 0;
   }
   get enableArchive(): boolean {
     return this.todoitems.reduce((result: boolean, item: TodoItem) => {
@@ -103,18 +99,6 @@ export default class Chatroom extends Vue {
       });
     });
   }
-  async handleAdd() {
-    if (this.enableNew) {
-      await this.refTodoList.collection("todoitems").add({
-        owner: this.$store.state.user.uid,
-        ownerName: this.$store.state.user.displayName,
-        timeCreated: firestore.FieldValue.serverTimestamp(),
-        title: this.title,
-        completed: false
-      });
-      this.title = "";
-    }
-  }
   handleCheck(item: TodoItem) {
     item.ref.update({
       completed: !item.completed
@@ -128,6 +112,3 @@ export default class Chatroom extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-</style>
