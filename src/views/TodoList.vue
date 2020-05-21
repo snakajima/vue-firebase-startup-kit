@@ -12,9 +12,7 @@
           @click="handleCheck(item)"
         />
         {{ item.title }}
-        <b-button @click="handleDetails(item)" size="is-small">
-          <i class="fas fa-angle-right" />
-        </b-button>
+        <b-button @click="handleDetails(item)" size="is-small" icon-left="angle-right" />
       </div>
       <div class="m-t-8">
         <b-button @click="handleArchive" icon-left="archive">Archive</b-button>

@@ -2,7 +2,13 @@
   <b-modal :active.sync="isVisible" :width="488">
     <form class="popup" @submit.prevent="handleSave">
       <b-input class="m-b-8" v-model="title" />
-      <b-button type="submit" :disabled="!modified" @click="handleSave" icon-left="save" />
+      <b-button
+        class="button is-primary"
+        type="submit"
+        :disabled="!modified"
+        @click="handleSave"
+        icon-left="save"
+      />
       <b-button class="m-l-8" type="is-danger" @click="handleDelete" icon-left="trash" />
     </form>
   </b-modal>
