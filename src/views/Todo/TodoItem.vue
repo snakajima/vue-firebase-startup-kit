@@ -12,7 +12,7 @@ import { isPrimitive } from "vue-class-component/lib/util";
 export default class TodoItemView extends Vue {
   isVisible = true;
 
-  @Prop() private item = {};
+  @Prop() private item: any | null;
   @Watch("item")
   onItemChange(newValue: boolean) {
     console.log("item", newValue);

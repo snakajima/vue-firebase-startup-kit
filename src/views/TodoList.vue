@@ -24,7 +24,7 @@
       <div class="m-t-8">
         <b-button @click="handleArchive">Archive</b-button>
       </div>
-      <todo-item-view v-if="details" :item="details" />
+      <todo-item-view v-if="details" :item.sync="details" />
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
