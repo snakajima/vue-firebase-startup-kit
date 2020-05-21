@@ -18,7 +18,7 @@
         <b-button :disabled="!enableArchive" @click="handleArchive" icon-left="archive">Archive</b-button>
       </div>
       <todo-item-view :item="details" />
-      <source-link path="views/Chatroom.vue" />
+      <source-link path="views/TodoList.vue" />
     </div>
     <div v-else>
       <b-loading active />
