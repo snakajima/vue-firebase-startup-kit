@@ -14,9 +14,7 @@
       <todo-item-view :item="details" />
       <source-link path="views/TodoList.vue" />
     </div>
-    <div v-else>
-      <b-loading active />
-    </div>
+    <b-loading v-else active />
   </section>
 </template>
 
@@ -28,7 +26,6 @@ import { TodoList, TodoItem } from "@/scripts/datatypes";
 import EditableTitle from "@/components/EditableTitle.vue";
 import SourceLink from "@/components/SourceLink.vue";
 import CreateNew from "@/components/CreateNew.vue";
-
 import TodoItemView from "@/views/Todo/TodoItem.vue";
 
 @Component({
