@@ -23,4 +23,5 @@ export interface TodoList extends BaseDocument {
 
 export interface TodoItem extends BaseDocument {
 	completed: boolean;
+	description: string;
 }
