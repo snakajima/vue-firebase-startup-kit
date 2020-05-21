@@ -11,6 +11,7 @@
         icon-left="save"
       />
       <b-button class="m-l-8" type="is-danger" @click="handleDelete" icon-left="trash" />
+      <source-link path="views/Todo/TodoItem.vue" />
     </form>
   </b-modal>
 </template>
@@ -18,8 +19,13 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { TodoItem } from "@/scripts/datatypes";
+import SourceLink from "@/components/SourceLink.vue";
 
-@Component
+@Component({
+  components: {
+    SourceLink
+  }
+})
 export default class TodoItemView extends Vue {
   isVisible = false;
   title = "";
