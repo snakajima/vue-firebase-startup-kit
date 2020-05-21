@@ -75,24 +75,21 @@ export default class Chatroom extends Vue {
     return item.completed ? "far fa-check-square" : "far fa-square";
   }
   async handleArchive() {
-    const today = new Date();
     const refTodoListsCollection = db.collection(`todolists`);
     const docArchive = await refTodoListsCollection.add({
       owner: this.$store.state.user.uid,
       ownerName: this.$store.state.user.displayName,
       timeCreated: firestore.FieldValue.serverTimestamp(),
-      title: `${this.todolist!.title} ${today.toDateString()}`
+      title: `${this.todolist!.title} ${new Date().toDateString()}`
     });
     const refArchiveCollection = db.collection(`${docArchive.path}/todoitems`);
-
     const snapshot = await this.refCollection
       .where("completed", "==", true)
       .get();
     snapshot.forEach(doc => {
-      const data = doc.data();
       db.runTransaction(async tx => {
-        tx.set(refArchiveCollection.doc(doc.id), data);
-        tx.delete(this.refCollection.doc(doc.id));
+        tx.set(refArchiveCollection.doc(doc.id), doc.data());
+        tx.delete(doc.ref);
       });
     });
   }
