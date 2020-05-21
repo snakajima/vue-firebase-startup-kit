@@ -133,7 +133,7 @@ export default class Chatroom extends Vue {
     await this.refTodoItem(id).delete();
   }
   async handleDetails(item: TodoItem) {
-    this.details = { id: item.id } as TodoItem;
+    this.details = { ...item } as TodoItem;
   }
   isOwner(id: string): boolean {
     const user = this.$store.state.user;
