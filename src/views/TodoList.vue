@@ -15,7 +15,7 @@
         <i @click="handleDetails(item)" class="m-l-8 fas fa-angle-right" />
       </div>
       <div class="m-t-8">
-        <b-button @click="handleArchive" icon-left="archive">Archive</b-button>
+        <b-button :disabled="!enableArchive" @click="handleArchive" icon-left="archive">Archive</b-button>
       </div>
       <todo-item-view :item="details" />
       <source-link path="views/Chatroom.vue" />
@@ -77,6 +77,11 @@ export default class Chatroom extends Vue {
   }
   get enableNew(): boolean {
     return this.title.length > 0;
+  }
+  get enableArchive(): boolean {
+    return this.todoitems.reduce((result: boolean, item: TodoItem) => {
+      return result || item.completed;
+    }, false);
   }
 
   async handleArchive() {
