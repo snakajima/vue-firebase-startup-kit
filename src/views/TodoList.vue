@@ -18,6 +18,9 @@
           @click="handleDelete(item.id)"
         />
       </div>
+      <div class="m-t-8">
+        <b-button @click="handleArchive">Archive</b-button>
+      </div>
       <source-link path="views/Chatroom.vue" />
     </div>
     <div v-else>
@@ -47,8 +50,7 @@ export default class Chatroom extends Vue {
   detacher?: firebase.Unsubscribe;
 
   async created() {
-    this.detacher = this.refTodoList
-      .collection("todoitems")
+    this.detacher = this.refCollection
       .orderBy("timeCreated")
       .onSnapshot(snapshot => {
         this.todoitems = snapshot.docs.map(doc => {
@@ -64,6 +66,9 @@ export default class Chatroom extends Vue {
   get refTodoList(): firebase.firestore.DocumentReference {
     return db.doc(`todolists/${this.$route.params.listId}`);
   }
+  get refCollection(): firebase.firestore.CollectionReference {
+    return this.refTodoList.collection("todoitems");
+  }
   get hasUser(): boolean {
     return !!this.$store.state.user;
   }
@@ -74,6 +79,28 @@ export default class Chatroom extends Vue {
     }, {});
   }
 
+  async handleArchive() {
+    const today = new Date();
+    const refTodoListsCollection = db.collection(`todolists`);
+    const docArchive = await refTodoListsCollection.add({
+      owner: this.$store.state.user.uid,
+      ownerName: this.$store.state.user.displayName,
+      timeCreated: firestore.FieldValue.serverTimestamp(),
+      title: `${this.todolist!.title} ${today.toDateString()}`
+    });
+    const refArchiveCollection = db.collection(`${docArchive.path}/todoitems`);
+
+    const snapshot = await this.refCollection
+      .where("completed", "==", true)
+      .get();
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      db.runTransaction(async tx => {
+        tx.set(refArchiveCollection.doc(doc.id), data);
+        tx.delete(this.refCollection.doc(doc.id));
+      });
+    });
+  }
   async handlePost() {
     await this.refTodoList.collection("todoitems").add({
       owner: this.$store.state.user.uid,
