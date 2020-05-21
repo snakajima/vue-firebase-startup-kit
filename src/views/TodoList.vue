@@ -7,10 +7,7 @@
         <b-button type="submit" :disabled="!enableNew" @click="handleAdd" icon-left="plus" />
       </form>
       <div v-for="item in todoitems" :key="item.id">
-        <i
-          :class="{far:true, 'fa-square':!item.completed, 'fa-check-square':item.completed}"
-          @click="handleCheck(item)"
-        />
+        <i :class="iconClass(item)" @click="handleCheck(item)" />
         {{ item.title }}
         <i @click="handleDetails(item)" class="m-l-8 fas fa-angle-right" />
       </div>
@@ -81,6 +78,9 @@ export default class Chatroom extends Vue {
     }, false);
   }
 
+  iconClass(item: TodoItem) {
+    return item.completed ? "far fa-check-square" : "far fa-square";
+  }
   async handleArchive() {
     const today = new Date();
     const refTodoListsCollection = db.collection(`todolists`);
