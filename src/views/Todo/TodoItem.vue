@@ -1,17 +1,23 @@
 <template>
   <b-modal :active.sync="isVisible" :width="488">
-    <p>Hello {{itemId}}</p>
+    <p>Hello {{item.id}}</p>
   </b-modal>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { isPrimitive } from "vue-class-component/lib/util";
 
 @Component
 export default class TodoItemView extends Vue {
   isVisible = true;
 
-  @Prop() private itemId!: string;
+  @Prop() private item = {};
+  @Watch("item")
+  onItemChange(newValue: boolean) {
+    console.log("item", newValue);
+    this.isVisible = true;
+  }
 }
 </script>
 
